@@ -1,7 +1,7 @@
 ## Browser Storage
 
 
-[`BrowserStorage.js`][relative_link__browser_storage] is a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
+[`BrowserStorage.js`][branch__master__browser_storage] is a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
 
 
 ------
@@ -94,29 +94,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 
-[help_fork]: https://help.github.com/en/articles/fork-a-repo
-[help_pull_request]: https://help.github.com/en/articles/about-pull-requests
-[help_github_pages__submodules]: https://help.github.com/en/articles/using-submodules-with-pages
-
-[git_book__submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
-[git_book__hooks]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
-
-
-[relative_link__issues]: issues
-[relative_link__members]: network/members
-[relative_link__browser_storage]: BrowserStorage.js
-
 [branch__master]: https://github.com/javascript-utilities/browser-storage/
+[branch__master__browser_storage]: https://github.com/javascript-utilities/browser-storage/blob/master/BrowserStorage.js
+
 
 [live_demo]: https://javascript-utilities.github.io/browser-storage/index.html
-
-
-[badge__issues]: https://img.shields.io/github/issues/javascript-utilities/browser-storage.svg
-[badge__contributors]: https://img.shields.io/github/forks/javascript-utilities/browser-storage.svg?color=005571&label=Contributors
-
-[badge__liberapay]: https://img.shields.io/badge/Liberapay-gray.svg?logo=liberapay
-[badge__bitcoin]: https://img.shields.io/badge/1Dr9KYZz9jkUea5xTxeGyScu7AwC4MwR5c-gray.svg?logo=bitcoin
-
-
-[liberapay_donate]: https://liberapay.com/javascript-utilities/donate
-[btc]: https://www.blockchain.com/btc/address/1Dr9KYZz9jkUea5xTxeGyScu7AwC4MwR5c
