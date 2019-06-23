@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <title>BrowserStorage Example</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <script src="assets/javascript-modules/browser-storage/BrowserStorage.js" type="text/javascript"></script>
+    <link type="text/css" href="assets/css/main.css" rel="stylesheet"/>
+
     <script type="text/javascript">
       const storage = new BrowserStorage();
       if (storage.storage_available != true) throw new Error('We may never have any memory of this...');
@@ -39,89 +42,31 @@
         return false;
       }
     </script>
-
-    <style media="screen">
-      /**
-       * Privacy notice footer stuff
-       */
-      .container__privacy_notice {
-        position: fixed;
-        bottom: 5px;
-        max-width: 80%;
-        max-width: 80vw;
-      }
-
-      /* State when checkbox is unchecked */
-      .privacy_notice__label::after {
-        content: '?';
-      }
-
-
-      /**
-       * Checkbox hacks
-       */
-      .hidden__input {
-        display: none;
-        visibility: hidden;
-        opacity: 0;
-        filter: alpha(opacity=0);
-      }
-
-      .container__privacy_notice {
-        box-shadow: inset -1em 1em rgba(159, 195, 155, 0.22);
-      }
-
-
-       /* State updates for when checkbox is checked */
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice {
-        box-shadow: unset;
-        max-width: 5%;
-        max-width: 5vw;
-        max-height: 5%;
-        max-height: 5vh;
-      }
-
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice * {
-        visibility: hidden;
-        opacity: 0;
-        filter: alpha(opacity=0);
-      }
-
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice .privacy_notice__label::after {
-        content: ' true';
-      }
-
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice::after {
-        content: '\1F56D';
-        position: absolute;
-        bottom: 5px;
-        left: 5px;
-      }
-
-      /* Combo of checked and hover state updates */
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover {
-        max-width: 80%;
-        max-width: 80vw;
-        max-height: unset;
-        box-shadow: inset -1em 1em rgba(159, 195, 155, 0.22);
-      }
-
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover::after {
-        content: '';
-      }
-
-      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover * {
-        visibility: visible;
-        opacity: 1;
-        filter: alpha(opacity=100);
-      }
-    </style>
-
   </head>
 
   <body onload="restore_settings();" onunload="store_settings();">
     <div class="container__main_content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>
+        This is a static site that provides the illusion of remembering a client.
+        Test by accepting the <i>privacy notice</i> and then refreshing or
+        closing and re-opening a tab pointing to the current URL.
+      </p>
+
+      <p>
+        <kbd>Ctrl</kbd> <kbd>R</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>R</kbd>
+        will refresh most desktop browsers.
+      </p>
+
+      <p>
+        Then reject the privacy notice by clicking on the Acceptable button
+        again to revert the behavior of this site.
+      </p>
+
+      <p>
+        Use <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> to open debugger on a
+        desktop browser, then navigate to the Storage tab/pane to observe
+        JavaScript doing things for the above mentioned actions.
+      </p>
     </div>
 
     <input type="checkbox"
@@ -131,14 +76,42 @@
            onchange="toggle_privacy_notice(this);">
     <div class="container__privacy_notice">
       <p>
-        This site uses JavaScript, the localStorage or cookies of your browser,
-        to enhance your experiance here, however, this site currently does
-        <strong>not</strong> store any data about your activity serever side.
+        This site uses JavaScript, and localStorage or cookies of your browser,
+        to enhance your experience here, however, this site currently does
+        <strong>not</strong> store any data about your activity severer-side.
+      </p>
+
+      <p>
+        Review the <a href="https://github.com/javascript-utilities/browser-storage#privacy">Privacy</a>
+        and <a href="https://github.com/javascript-utilities/browser-storage#security">Security</a>
+        notices regarding the
+        <a href="https://github.com/javascript-utilities/browser-storage/blob/master/BrowserStorage.js">
+          BrowserStorage.js
+        </a>, for more details on how client-side storage and scripting are utilized.
       </p>
       <label for="trigger__privacy_notice"
              class="menu__trigger__label privacy_notice__label"
              title="Click to toggle."
-             >Acceptable</label>
+             value="false"
+             checked="true"
+             >Acceptable: </label>
     </div>
   </body>
+
+  <!-- License
+    Browser Storage index.html example is apart of a submodule for Git tracked web sites
+    Copyright (C) 2019  S0AndS0
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation; version 3 of the License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
 </html>

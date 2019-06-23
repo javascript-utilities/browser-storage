@@ -1,0 +1,111 @@
+/**
+ * 1. Center element
+ * 2. Re-justify text
+ */
+body {
+  text-align: center;    /* 1 */
+}
+
+.container__main_content {
+  max-width: 80%;
+  max-width: 80vw;
+  display: inline-block; /* 1 */
+  text-align: left;      /* 2 */
+}
+
+/**
+ * Privacy notice footer stuff
+ */
+.container__privacy_notice {
+  position: fixed;
+  bottom: 5px;
+  max-width: 80%;
+  max-width: 80vw;
+  background-color: lightgrey;
+  text-align: left;    /* 2 */
+}
+
+.privacy_notice__label {
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  float: right;
+}
+
+.privacy_notice__label:hover {
+  color: lightgrey;
+}
+
+/* State of label when checkbox is unchecked */
+.privacy_notice__label::after {
+  content: attr(value);
+}
+
+
+/**
+ * Checkbox hacks
+ */
+.hidden__input {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+
+ /* State updates for when checkbox is checked */
+.privacy_notice__checkbox:checked ~ .container__privacy_notice {
+  box-shadow: unset;
+  max-width: 1.5rem;
+  max-height: 1.5rem;
+}
+
+.privacy_notice__checkbox:checked ~ .container__privacy_notice * {
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.privacy_notice__checkbox:checked ~ .container__privacy_notice .privacy_notice__label::after {
+  content: attr(checked);
+}
+
+/* State of label when checkbox is checked */
+.privacy_notice__checkbox:checked ~ .container__privacy_notice::after {
+  content: '\1F56D';
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+/* Combo of checked and hover state updates */
+.privacy_notice__checkbox:checked ~ .container__privacy_notice:hover {
+  max-width: 80%;
+  max-width: 80vw;
+  max-height: unset;
+}
+
+.privacy_notice__checkbox:checked ~ .container__privacy_notice:hover * {
+  visibility: visible;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+
+/** License
+ * Example main.css is apart of a submodule for Git tracked web sites
+ * Copyright (C) 2019  S0AndS0
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation; version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
