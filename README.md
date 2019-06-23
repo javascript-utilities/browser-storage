@@ -12,14 +12,13 @@
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Usage Examples](#usage-examples)
 - [Security](#security)
 - [Privacy](#privacy)
 - [Support](#support)
 - [License](#license)
 
 
-> See the [`gh-pages`][branch__gh-pages] branch for example code and `.submodules` file, which builds the live [demo hosted][live_demo] on GitHub Pages.
+> See the [`gh-pages`][branch__gh-pages] branch for example usage and code, which builds the live [demo hosted][live_demo] on GitHub Pages.
 
 
 ------
@@ -28,7 +27,7 @@
 ## Requirements
 
 
-GitHub Pages hosting [help article][help_github_pages__submodules] states that one may use submodules pointing to any **public** GitHub tracked repository, this repository is public thus including the code of this project within your own is relatively painless by following the [Installation](#installation) and [Usage Examples](#usage-examples) portions of this `readme` file.
+GitHub Pages hosting [help article][help_github_pages__submodules] states that one may use submodules pointing to any **public** GitHub tracked repository, this repository **is** public thus including the code of this project within your own is relatively painless by following the [Installation](#installation) portion of this `readme` file.
 
 
 For the time being, hosting elsewhere is outside the scope of this `readme` file, but [_`git hooks`_][git_book__hooks] may be a helpful topic to research if hosting on a Virtual Private Server or other web hosts that allow for _post-push automation_. And setting _`cookie-free`_ as discussed on [ServerFault]((https://serverfault.com/questions/78227/what-is-a-cookie-free-domain)) probably would be a _good idea_ too.
@@ -37,7 +36,7 @@ For the time being, hosting elsewhere is outside the scope of this `readme` file
 ## Installation
 
 
-Add one of the available `clone` URLs to a current project...
+HTTPS `clone` URL to `your-project`...
 
 
 ```bash
@@ -53,7 +52,7 @@ git submodule add -b master "${_url}" "${_dir}"
 ```
 
 
-> Note, GitHub pages requires the use of `https` links.
+> Note, GitHub Pages **requires** the use of `https` links to make use of repositories within a `.gitmodules` file.
 >
 > And older versions of `git` may require the following to populate `${_dir}`...
 
@@ -67,7 +66,7 @@ Check that something similar to the following results from `git status`...
 
 
 ```git
-On branch master
+On branch gh-pages
 
 Initial commit
 
@@ -115,63 +114,13 @@ git pull
 > ... to re-attach the submodule's `HEAD` once again.
 
 
-## Usage Examples
-
-
-Source the JavaScript from this project within the `<head>` tags...
-
-
-```html
-<script src="BrowserStorage.js" type="text/javascript"></script>
-```
-
-
-Initialize an instance of `BrowserStorage` and test that some form of client side storage is available...
-
-
-```html
-<script type="text/javascript">
-  const storage = new BrowserStorage();
-
-  if (storage.storage_available != true) {
-    throw new Error('We may never have any memory of this...');
-  }
-</script>
-```
-
-
-The following methods are available to the `storage` instance;
-
-
-- `storage_available`, property returning `boolean` of if storage was available during initialization.
-
-- `supportsLocalStorage()`, use `storage.supports_local_storage` property instead within tests, unless it is expected that permissions will change before the next page load on the same domain.
-
-- `supportsCookies()`, much like `supportsLocalStorage` use `storage.supports_cookies` instead within tests to avoid re-checking.
-
-- `constructorRefresh()`, a copy of `constructor()` that may be called after initialization to refresh class properties.
-
-- `get(key)`, returns `null` or value (may be `boolean`, `integer`, `float`, or `string`) associated with passed `key`
-
-- `remove(key)`, returns `boolean` after removing values associated with passed `key`
-
-- `set(key, value, days_to_live)`, associates `key` with `value` for a number of `days_to_live`
-
-- `clear()`, removes all locally stored _`value`s_ from browser storage.
-
-
-> Note, if/when this class falls-back to using cookies both `remove(key)` and `clear()` methods require a page refresh to also remove stored `key` names.
->
-> And when this class is using `localStorage` then _`set`'s_ `days_to_live` is currently _meaningless_.
-
-
 ##  Security
 
 
 Values returned by the `get(key)` method are filtered through `encodeURIComponent`, however, :warning: this should **not** be considered _trusted_ input or fully _sanitized_. Authors utilizing code from this project should still use caution when handling returned values.
 
 
-By default other sub-domains do **not** have access to data handled by `BrowserStorage`, authors utilizing code from this project are encouraged keep it that way as there are good reasons for browsers behaving like that.
+By default other sub-domains do **not** have access to data handled by `BrowserStorage`, authors utilizing code from this project are encouraged keep it that way as there are good reasons for browsers behaving like that. Project under the same sub-domain _should_ have access to `BrowserStorage`, meaning that authors may include code from this repository in multiple projects under the same GitHub account or or organization name and access client settings with JavaScript; all in all allowing for theming and other configurations to remain seamlessly consistent.
 
 
 ## Privacy
