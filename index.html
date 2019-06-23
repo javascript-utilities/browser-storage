@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <script src="assets/javascript-modules/browser-storage/BrowserStorage.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      const storage = new BrowserStorage();
+      if (storage.storage_available != true) throw new Error('We may never have any memory of this...');
+
+
+      function restore_settings() {
+        let privacy_notice_read = storage.get('checkbox__privacy_notice');
+        if (privacy_notice_read != 'true' && privacy_notice_read != true) return false;
+
+        document.getElementById('trigger__privacy_notice').checked = true;
+        return true;
+      }
+
+
+      function store_settings() {
+        let privacy_notice_read = storage.get('checkbox__privacy_notice');
+        if (privacy_notice_read != 'true' && privacy_notice_read != true)       return false;
+        if (document.getElementById('trigger__privacy_notice').checked != true) return false;
+
+        storage.set('checkbox__privacy_notice', true, 365);
+        return true;
+      }
+
+
+      function toggle_privacy_notice(input_element) {
+        if (input_element.checked == true) {
+          storage.set('checkbox__privacy_notice', input_element.checked, 365);
+          return true;
+        }
+        storage.remove('checkbox__privacy_notice');
+        storage.clear();
+        return false;
+      }
+    </script>
+
+    <style media="screen">
+      /**
+       * Privacy notice footer stuff
+       */
+      .container__privacy_notice {
+        position: fixed;
+        bottom: 5px;
+        max-width: 80%;
+        max-width: 80vw;
+      }
+
+      /* State when checkbox is unchecked */
+      .privacy_notice__label::after {
+        content: '?';
+      }
+
+
+      /**
+       * Checkbox hacks
+       */
+      .hidden__input {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+        filter: alpha(opacity=0);
+      }
+
+      .container__privacy_notice {
+        box-shadow: inset -1em 1em rgba(159, 195, 155, 0.22);
+      }
+
+
+       /* State updates for when checkbox is checked */
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice {
+        box-shadow: unset;
+        max-width: 5%;
+        max-width: 5vw;
+        max-height: 5%;
+        max-height: 5vh;
+      }
+
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice * {
+        visibility: hidden;
+        opacity: 0;
+        filter: alpha(opacity=0);
+      }
+
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice .privacy_notice__label::after {
+        content: ' true';
+      }
+
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice::after {
+        content: '\1F56D';
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+      }
+
+      /* Combo of checked and hover state updates */
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover {
+        max-width: 80%;
+        max-width: 80vw;
+        max-height: unset;
+        box-shadow: inset -1em 1em rgba(159, 195, 155, 0.22);
+      }
+
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover::after {
+        content: '';
+      }
+
+      .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover * {
+        visibility: visible;
+        opacity: 1;
+        filter: alpha(opacity=100);
+      }
+    </style>
+
+  </head>
+
+  <body onload="restore_settings();" onunload="store_settings();">
+    <div class="container__main_content">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+    </div>
+
+    <input type="checkbox"
+           name="checkbox__privacy_notice"
+           class="hidden__input privacy_notice__checkbox"
+           id="trigger__privacy_notice"
+           onchange="toggle_privacy_notice(this);">
+    <div class="container__privacy_notice">
+      <p>
+        This site uses JavaScript, the localStorage or cookies of your browser,
+        to enhance your experiance here, however, this site currently does
+        <strong>not</strong> store any data about your activity serever side.
+      </p>
+      <label for="trigger__privacy_notice"
+             class="menu__trigger__label privacy_notice__label"
+             title="Click to toggle."
+             >Acceptable</label>
+    </div>
+  </body>
+</html>

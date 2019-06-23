@@ -1,0 +1,4 @@
+[submodule "assets/javascript-modules/browser-storage"]
+	path = assets/javascript-modules/browser-storage
+	url = https://github.com/javascript-utilities/browser-storage.git
+	branch = master
