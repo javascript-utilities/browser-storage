@@ -27,7 +27,10 @@
 ## Requirements
 
 
-GitHub Pages hosting [help article][help_github_pages__submodules] states that one may use submodules pointing to any **public** GitHub tracked repository, this repository **is** public thus including the code of this project within your own is relatively painless by following the [Installation](#installation) portion of this `readme` file.
+Understand that this project is intended for storing data within a client's browser that the same browser may consider re-using latter, eg. a preferred `title` that selects the `alternate stylesheet` for all project pages, or perhaps difficulty level for a browser powered arcade, and not for anything server-side.
+
+
+The GitHub Pages hosting [help article][help_github_pages__submodules] states that one may use submodules pointing to any **public** GitHub tracked repository, this repository **is** public thus including the code of this project within your own is relatively painless by following the [Installation](#installation) portion of this `readme` file.
 
 
 For the time being, hosting elsewhere is outside the scope of this `readme` file, but [_`git hooks`_][git_book__hooks] may be a helpful topic to research if hosting on a Virtual Private Server or other web hosts that allow for _post-push automation_. And setting _`cookie-free`_ as discussed on [ServerFault]((https://serverfault.com/questions/78227/what-is-a-cookie-free-domain)) probably would be a _good idea_ too.
@@ -36,7 +39,7 @@ For the time being, hosting elsewhere is outside the scope of this `readme` file
 ## Installation
 
 
-HTTPS `clone` URL to `your-project`...
+Add the HTTPS `clone` URL to _`your-project`'s_ `.gitmodules` file...
 
 
 ```bash
@@ -117,22 +120,25 @@ git pull
 ##  Security
 
 
-Values returned by the `get(key)` method are filtered through `encodeURIComponent`, however, :warning: this should **not** be considered _trusted_ input or fully _sanitized_. Authors utilizing code from this project should still use caution when handling returned values.
+Values returned by the `get(key)` method are filtered through `encodeURIComponent`, however :warning:, this should **not** be considered _trusted_ input or fully _sanitized_; those utilizing code from this project should still use caution when handling returned values. Additionally any given `value` saved within a browser should be of a `string`, `float`/`integer`, or `boolean` type, and strings _should_ be simple such as _IDs_ or similar for _downstream_ JavaScript to look-up.
 
 
-By default other sub-domains do **not** have access to data handled by `BrowserStorage`, authors utilizing code from this project are encouraged keep it that way as there are good reasons for browsers behaving like that. Project under the same sub-domain _should_ have access to `BrowserStorage`, meaning that authors may include code from this repository in multiple projects under the same GitHub account or or organization name and access client settings with JavaScript; all in all allowing for theming and other configurations to remain seamlessly consistent.
+By default other sub-domains do **not** have access to data handled by `BrowserStorage`, those utilizing code from this project are encouraged to keep it that way as there are good reasons for browsers behaving like that. Projects under the same sub-domain _should_ have access to `BrowserStorage`, meaning that those utilizing code from this project may do so within multiple projects under the same GitHub account or or organization name and access client settings with client-side JavaScript; all in all allowing for theming and other configurations to be seamlessly consistent across an organization or account sub-domain without any server-side data bases or scripting.
 
 
 ## Privacy
 
 
-When cookies are used, `key` `value` pares are set within browser storage with the `path=/` parameter to mitigate risks of other sites reading client stored data. Additionally most browsers will send cookies on **every** request by default, meaning that interception and/or logging could be taking place by server administrators.
+Cookies are only used if a browser does not have `localStorage` available, because it is the intention of this project to be accessible on _most_ devices while preferably using storage options that do not easily _leak_ client preferences. In most cases this means hosting static content generally does not require client data to be stored on a server thus each client becomes the owner of their own data.
 
 
-When `localStorage` is available **no** data is sent back to the server by default. For static sites, such as those hosted by GitHub Pages, this means that no data about client preferences are stored anywhere other than on the respective browser.
+When cookies are used, `key` `value` pares are set within browser storage with the `path=/` parameter to mitigate risks of other sites reading client stored data. Unfortunately most browsers by default will send cookies on **every** request to a matching sub-domain, meaning that interception and/or logging _could_ be taking place by server administrators. Site administrators are encouraged to set _`cookie-free`_ to notify browsers to stop this behavior on servers that only serve static content similar to GitHub Pages.
 
 
-By default the code of this project does **not** send any data anywhere otherwise, and generally project authors using code from this project do **not** have access to any data stored by the `BrowserStorage` class.
+When `localStorage` is available **no** data is sent back to the server by default. For static sites, such as those hosted by GitHub Pages, this means that no data about client preferences are stored anywhere other than on the respective browser. By default the code of this project does **not** send any data anywhere otherwise, and generally project authors using code from this project do **not** have server-side access to any data stored by the `BrowserStorage` class.
+
+
+That all stated it is possible that browser stored data could be transmitted by another script to third parties, so those utilizing code from this project are encouraged to **not** store anything of a sensitive and/or private nature.
 
 
 ## Support
