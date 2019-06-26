@@ -1,20 +1,3 @@
-
-// BrowserStorage is a JavaScript submodule for Git tracked web sites
-// Copyright (C) 2019  S0AndS0
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published
-// by the Free Software Foundation; version 3 of the License.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
 /**
  * Thanks be to:
  *  https://www.w3schools.com/js/js_cookies.asp
@@ -27,6 +10,7 @@
 class BrowserStorage {
   /**
    * @this BrowserStorage
+   * @copyright S0AndS0 2019 GNU AGPL version 3
    */
   constructor() {
     this.supports_local_storage = this.supportsLocalStorage();
@@ -40,20 +24,19 @@ class BrowserStorage {
    */
   supportsLocalStorage() {
     try {
-      let key = 'test'
-      let value = true;
-      localStorage.setItem(key, value);
-      localStorage.getItem(key);
-      localStorage.removeItem(key);
+      localStorage.setItem('test_key', true);
     } catch (e) {
       return false;
+    } finally {
+      localStorage.removeItem('test_key');
     }
     return true;
   }
 
   /**
    * Note, use `this.supports_cookies` instead within tests.
-   * @returs {boolean}
+   * @returns {boolean}
+   * @this BrowserStorage
    */
   supportsCookies() {
     if (navigator.cookieEnabled) return true;
@@ -62,17 +45,19 @@ class BrowserStorage {
       document.cookie = 'testcookie';
     } catch (e) {
       return false;
-    } finally {
-      if (document.cookie.indexOf('testcookie') != -1) {
-        this.remove('testcookie');
-        return true;
-      }
-      return false;
     }
+
+    if (document.cookie.indexOf('testcookie') != -1) {
+      this.remove('testcookie');
+      return true;
+    }
+    return false;
   }
 
   /**
    * Copy of `constructor` method that should not through a type error
+   * @returns {none}
+   * @this BrowserStorage
    */
   constructorRefresh() {
     this.supports_local_storage = this.supportsLocalStorage();
@@ -82,23 +67,27 @@ class BrowserStorage {
 
   /**
    * Gets specified value from browser storage and URI component encodes while returning
-   * @returs {?boolean|?number|?string}
+   * @returns {?boolean|?number|?string}
+   * @param {string|number} key - Name of key to look up value for.
+   * @throws Error when no local storage options where detected
    * @this BrowserStorage
    */
   get(key) {
-    let value = null;
     if (this.supports_local_storage) {
-      value = localStorage.getItem(key);
+      return encodeURIComponent(localStorage.getItem(key));
     } else if (this.supports_cookies) {
+      let value = null;
       let cookie_data = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
       value = cookie_data ? cookie_data[2] : null;
+      return encodeURIComponent(value);
     }
-    return encodeURIComponent(value);
+    throw new Error('No local browser storage options available!');
   }
 
   /**
-   * Removes select value by key from browser storage; note for cookies, _full whipe_ will ocure on next page load
-   * @returs {boolean}
+   * Removes select value by key from browser storage; note for cookies, _full wipe_ will occur on next page load
+   * @returns {boolean}
+   * @throws Error when no local storage options where detected
    * @this BrowserStorage
    */
   remove(key) {
@@ -111,15 +100,15 @@ class BrowserStorage {
       this.set(key, '', -7);
       return true;
     }
-    return false;
+    throw new Error('No local browser storage options available!');
   }
 
   /**
-   * Stores client settings within browser, _serverless_ in the truest sence
-   * @peram {string|number}           key - _variable name_ to store value under
-   * @peram {boolean|number|string} value - stored either under localStorage or as a cookie
-   * @peram {number}         days_to_live - how long a browser is suggested to keep cookies
-   * @returs {boolean}
+   * Stores client settings within browser, _serverless_ in the truest scene
+   * @param {string|number}           key - _variable name_ to store value under
+   * @param {boolean|number|string} value - stored either under localStorage or as a cookie
+   * @param {number}         days_to_live - how long a browser is suggested to keep cookies
+   * @returns {boolean}
    * @this BrowserStorage
    */
   set(key, value, days_to_live = false) {
@@ -128,7 +117,6 @@ class BrowserStorage {
       return true;
     } else if (this.supports_cookies) {
       let expires = '';
-
       if (days_to_live) {
         let date = new Date();
         if (days_to_live == 0) {
@@ -147,7 +135,8 @@ class BrowserStorage {
 
   /**
    * Clears **all** client settings from either localStorage or cookies
-   * @returs {boolean}
+   * @returns {boolean}
+   * @throws Error when no local storage options where detected
    * @this BrowserStorage
    */
   clear() {
@@ -167,7 +156,7 @@ class BrowserStorage {
       }
       return true;
     }
-    return false;
+    throw new Error('No local browser storage options available!');
   }
 
 }

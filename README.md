@@ -6,6 +6,8 @@
 
 ------
 
+<sub>[![Issues][badge__issues]][relative_link__issues]</sub> <sub>[![Contributors][badge__contributors]][relative_link__members]</sub>
+
 
 #### Table of Contents
 
@@ -14,11 +16,12 @@
 - [Installation](#installation)
 - [Security](#security)
 - [Privacy](#privacy)
-- [Support](#support)
 - [License](#license)
 
 
 > See the [`gh-pages`][branch__gh-pages] branch for example usage and code, which builds the live [demo hosted][live_demo] on GitHub Pages.
+>
+> See the [Organization Support][organization_defaults__support] for guidelines on contributing to code maintained by this organization and/or supporting those that do.
 
 
 ------
@@ -141,20 +144,6 @@ When `localStorage` is available **no** data is sent back to the server by defau
 That all stated it is possible that browser stored data could be transmitted by another script to third parties, so those utilizing code from this project are encouraged to **not** store anything of a sensitive and/or private nature.
 
 
-## Support
-
-
-Open a new _`Issue`_ (or up-vote currently opened <sub>[![Issues][badge__issues]][relative_link__issues]</sub> if similar) to report bugs and/or make feature requests a higher priority for project maintainers. Submit _`Pull Requests`_ after _`Forking`_ this repository to add features or fix bugs, and be counted among this project's <sub>[![Members][badge__contributors]][relative_link__members]</sub>
-
-
-> See GitHub's documentation on [Forking][help_fork] and issuing [Pull Requests][help_pull_request] if these are new terms.
->
-> Please check the chapter regarding [submodules][git_book__submodules] from the Git book prior to opening issues regarding submodule _trouble-shooting_
-
-
-Supporting projects like this one through <sub>[![Liberapay][badge__liberapay]][liberapay_donate]</sub> or via Bitcoin <sub>[![BTC][badge__bitcoin]][btc]</sub> is most welcomed, and encourages the continued development of projects like these.
-
-
 ## License
 
 
@@ -197,9 +186,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 [badge__issues]: https://img.shields.io/github/issues/javascript-utilities/browser-storage.svg
 [badge__contributors]: https://img.shields.io/github/forks/javascript-utilities/browser-storage.svg?color=005571&label=Contributors
 
-[badge__liberapay]: https://img.shields.io/badge/Liberapay-gray.svg?logo=liberapay
-[badge__bitcoin]: https://img.shields.io/badge/1Dr9KYZz9jkUea5xTxeGyScu7AwC4MwR5c-gray.svg?logo=bitcoin
 
-
-[liberapay_donate]: https://liberapay.com/javascript-utilities/donate
-[btc]: https://www.blockchain.com/btc/address/1Dr9KYZz9jkUea5xTxeGyScu7AwC4MwR5c
+[organization_defaults__support]: https://github.com/javascript-utilities/.github/blob/master/README.md#support
