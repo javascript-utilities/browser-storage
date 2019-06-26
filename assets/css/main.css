@@ -86,6 +86,13 @@ body {
   max-height: unset;
 }
 
+.privacy_notice__checkbox:checked ~ .container__privacy_notice:hover::after {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
 .privacy_notice__checkbox:checked ~ .container__privacy_notice:hover * {
   visibility: visible;
   opacity: 1;

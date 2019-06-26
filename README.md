@@ -14,7 +14,7 @@
 - [License](#license)
 
 
-> See the [`master`][branch__master] branch for Installation, Requirements, and Support topics.
+> See the [`master`][branch__master] branch for Installation, and Requirements topics.
 >
 > Check the [live demo][live_demo] hosted by GitHub Pages of code contained within this branch that utilities code from the `master` branch.
 
