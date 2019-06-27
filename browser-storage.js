@@ -7,9 +7,9 @@
  */
 
 
-class BrowserStorage {
+class Browser_Storage {
   /**
-   * @this BrowserStorage
+   * @this Browser_Storage
    * @copyright S0AndS0 2019 GNU AGPL version 3
    */
   constructor() {
@@ -36,7 +36,7 @@ class BrowserStorage {
   /**
    * Note, use `this.supports_cookies` instead within tests.
    * @returns {boolean}
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   supportsCookies() {
     if (navigator.cookieEnabled) return true;
@@ -57,7 +57,7 @@ class BrowserStorage {
   /**
    * Copy of `constructor` method that should not through a type error
    * @returns {none}
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   constructorRefresh() {
     this.supports_local_storage = this.supportsLocalStorage();
@@ -70,7 +70,7 @@ class BrowserStorage {
    * @returns {?boolean|?number|?string}
    * @param {string|number} key - Name of key to look up value for.
    * @throws Error when no local storage options where detected
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   get(key) {
     if (this.supports_local_storage) {
@@ -88,7 +88,7 @@ class BrowserStorage {
    * Removes select value by key from browser storage; note for cookies, _full wipe_ will occur on next page load
    * @returns {boolean}
    * @throws Error when no local storage options where detected
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   remove(key) {
     if (this.supports_local_storage) {
@@ -109,7 +109,7 @@ class BrowserStorage {
    * @param {boolean|number|string} value - stored either under localStorage or as a cookie
    * @param {number}         days_to_live - how long a browser is suggested to keep cookies
    * @returns {boolean}
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   set(key, value, days_to_live = false) {
     if (this.supports_local_storage) {
@@ -137,7 +137,7 @@ class BrowserStorage {
    * Clears **all** client settings from either localStorage or cookies
    * @returns {boolean}
    * @throws Error when no local storage options where detected
-   * @this BrowserStorage
+   * @this Browser_Storage
    */
   clear() {
     if (this.supports_local_storage) {
