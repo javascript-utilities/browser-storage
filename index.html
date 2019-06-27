@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <title>BrowserStorage Example</title>
+    <title>Browser_Storage Example</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-    <script src="assets/javascript-modules/browser-storage/BrowserStorage.js" type="text/javascript"></script>
+    <script src="assets/javascript-modules/browser-storage/browser-storage.js" type="text/javascript"></script>
     <link type="text/css" href="assets/css/main.css" rel="stylesheet"/>
 
     <script type="text/javascript">
-      const storage = new BrowserStorage();
+      const storage = new Browser_Storage();
       if (storage.storage_available != true) throw new Error('We may never have any memory of this...');
 
 
@@ -85,8 +85,8 @@
         Review the <a href="https://github.com/javascript-utilities/browser-storage#privacy">Privacy</a>
         and <a href="https://github.com/javascript-utilities/browser-storage#security">Security</a>
         notices regarding the
-        <a href="https://github.com/javascript-utilities/browser-storage/blob/master/BrowserStorage.js">
-          BrowserStorage.js
+        <a href="https://github.com/javascript-utilities/browser-storage/blob/master/browser-storage.js">
+          browser-storage.js
         </a>, for more details on how client-side storage and scripting are utilized.
       </p>
       <label for="trigger__privacy_notice"
