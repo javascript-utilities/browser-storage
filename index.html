@@ -24,7 +24,7 @@
 
       function store_settings() {
         let privacy_notice_read = storage.get('checkbox__privacy_notice');
-        if (privacy_notice_read != 'true' && privacy_notice_read != true)       return false;
+        if (privacy_notice_read != true) return false;
         if (document.getElementById('trigger__privacy_notice').checked != true) return false;
 
         storage.set('checkbox__privacy_notice', true, 365);
@@ -43,6 +43,8 @@
       }
     </script>
   </head>
+
+
 
   <body onload="restore_settings();" onunload="store_settings();">
     <div class="container__main_content">
