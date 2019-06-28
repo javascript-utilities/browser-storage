@@ -66,20 +66,29 @@ class Browser_Storage {
   }
 
   /**
-   * Gets specified value from browser storage and URI component encodes while returning
+   * Returns decoded value for given key
    * @returns {?boolean|?number|?string}
    * @param {string|number} key - Name of key to look up value for.
    * @throws Error when no local storage options where detected
    * @this Browser_Storage
    */
   get(key) {
+    let decoded_value = null;
     if (this.supports_local_storage) {
-      return encodeURIComponent(localStorage.getItem(key));
+      decoded_value = decodeURIComponent(localStorage.getItem(key));
     } else if (this.supports_cookies) {
-      let value = null;
       let cookie_data = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
-      value = cookie_data ? cookie_data[2] : null;
-      return encodeURIComponent(value);
+      decoded_value = cookie_data ? decodeURIComponent(cookie_data[2]) : null;
+    }
+
+    if (this.supports_local_storage || this.supports_cookies) {
+      // Ignore SyntaxError from decoded strings
+      //  and if so return decoded value instead
+      try {
+        return JSON.parse(decoded_value);
+      } catch (e) {
+        if (!(e instanceof SyntaxError)) throw e;
+      }
     }
     throw new Error('No local browser storage options available!');
   }
