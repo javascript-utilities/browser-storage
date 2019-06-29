@@ -1,18 +1,52 @@
 /**
  * Thanks be to:
- *  https://www.w3schools.com/js/js_cookies.asp
- *  https://gist.github.com/steveosoule/5679949
- *  https://jsdoc.app/about-getting-started.html
- *  https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript
+ *   https://www.w3schools.com/js/js_cookies.asp
+ *   https://gist.github.com/steveosoule/5679949
+ *   https://jsdoc.app/about-getting-started.html
+ *   https://jestjs.io/docs/en/getting-started
+ *   https://stackoverflow.com/questions/5639346
  */
 
 
+/**
+ * @author S0AndS0
+ * @copyright AGPL-3.0
+ * @example <caption>Quick Usage for Browser Storage</caption>
+ * // Initialize new class instance
+ * const storage = new Browser_Storage();
+ * if (!storage.storage_available) {
+ *   console.error('No browser storage available!');
+ * } else {
+ *   if (!storage.supports_local_storage) {
+ *     console.warn('Falling back to cookies!');
+ *   }
+ *   // Do stuff with local storage of browser!
+ *   storage.set('test__string', 'Spam!', 7);
+ *   console.log("storage.get('test__string') -> " + storage.get('test__string'));
+ * }
+ */
 class Browser_Storage {
   /**
+   * Sets properties used by other methods of this class
+   * @returns {none}
+   * @property {boolean} supports_local_storage - What `this.supportsLocalStorage()` has to say
+   * @property {boolean} supports_cookies       - What `this.supportsCookies()` has to say
+   * @property {boolean} storage_available      - If either of the above is `true`
    * @this Browser_Storage
-   * @copyright S0AndS0 2019 GNU AGPL version 3
+   * @class
    */
   constructor() {
+    this.supports_local_storage = this.supportsLocalStorage();
+    this.supports_cookies = this.supportsCookies();
+    this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
+  }
+
+  /**
+   * Copy of `this.constructor` that should not throw `TypeError` when called
+   * @returns {none}
+   * @this Browser_Storage
+   */
+  constructorRefresh() {
     this.supports_local_storage = this.supportsLocalStorage();
     this.supports_cookies = this.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
@@ -55,29 +89,19 @@ class Browser_Storage {
   }
 
   /**
-   * Copy of `constructor` method that should not through a type error
-   * @returns {none}
-   * @this Browser_Storage
-   */
-  constructorRefresh() {
-    this.supports_local_storage = this.supportsLocalStorage();
-    this.supports_cookies = this.supportsCookies();
-    this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
-  }
-
-  /**
-   * Returns decoded value for given key
-   * @returns {?boolean|?number|?string}
+   * Gets decoded value for given key
+   * @returns {?boolean|?number|?string|?undefined}
+   * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number} key - Name of key to look up value for.
-   * @throws Error when no local storage options where detected
    * @this Browser_Storage
    */
   get(key) {
-    let decoded_value = null;
+    const encoded_key = encodeURIComponent(key);
+    let decoded_value = undefined;
     if (this.supports_local_storage) {
-      decoded_value = decodeURIComponent(localStorage.getItem(key));
+      decoded_value = decodeURIComponent(localStorage.getItem(encoded_key));
     } else if (this.supports_cookies) {
-      let cookie_data = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+      let cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
       decoded_value = cookie_data ? decodeURIComponent(cookie_data[2]) : null;
     }
 
@@ -89,14 +113,16 @@ class Browser_Storage {
       } catch (e) {
         if (!(e instanceof SyntaxError)) throw e;
       }
+      return decoded_value;
     }
-    throw new Error('No local browser storage options available!');
+
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
   }
 
   /**
-   * Removes select value by key from browser storage; note for cookies, _full wipe_ will occur on next page load
+   * Removes value by key from browser storage; cookies require page refresh
    * @returns {boolean}
-   * @throws Error when no local storage options where detected
+   * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
   remove(key) {
@@ -109,25 +135,29 @@ class Browser_Storage {
       this.set(key, '', -7);
       return true;
     }
-    throw new Error('No local browser storage options available!');
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
   }
 
   /**
    * Stores client settings within browser, _serverless_ in the truest scene
+   * @returns {boolean}
+   * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number}           key - _variable name_ to store value under
    * @param {boolean|number|string} value - stored either under localStorage or as a cookie
    * @param {number}         days_to_live - how long a browser is suggested to keep cookies
-   * @returns {boolean}
    * @this Browser_Storage
    */
   set(key, value, days_to_live = false) {
+    const encoded_key = encodeURIComponent(key);
+    const encoded_value = encodeURIComponent(JSON.stringify(value));
+
     if (this.supports_local_storage) {
-      localStorage.setItem(key, value);
+      localStorage.setItem(encoded_key, encoded_value);
       return true;
     } else if (this.supports_cookies) {
       let expires = '';
       if (days_to_live) {
-        let date = new Date();
+        const date = new Date();
         if (days_to_live == 0) {
           date.setTime(date.getTime());
         } else {
@@ -136,16 +166,37 @@ class Browser_Storage {
         expires = '; expires=' + date.toGMTString();
       }
 
-      document.cookie = name + '=' + value + expires + '; path=/';
+      document.cookie = encoded_key + '=' + encoded_value + expires + '; path=/';
       return true;
     }
-    return false;
+
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+  }
+
+  /**
+   * Lists keys that may point to values
+   * @returns {boolean}
+   * @throws {ReferenceError} When no browser based storage is available
+   * @this Browser_Storage
+   */
+  keys() {
+    if (this.supports_local_storage) {
+      return Object.keys(localStorage);
+    } else if (this.supports_cookies) {
+      let cookie_keys = [];
+      document.cookie.split(';').forEach((pare) => {
+        cookie_keys.push(pare.split('=')[0]);
+      });
+      return cookie_keys;
+    }
+
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
   }
 
   /**
    * Clears **all** client settings from either localStorage or cookies
    * @returns {boolean}
-   * @throws Error when no local storage options where detected
+   * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
   clear() {
@@ -153,19 +204,25 @@ class Browser_Storage {
       localStorage.clear();
       return true;
     } else if (this.supports_cookies) {
-      let cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i];
-        let key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
+      document.cookie.split(';').forEach((cookie) => {
+        const key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
         if (typeof(key) == 'string' || typeof(key) == 'number') {
           this.remove(key);
         } else {
           return false;
         }
-      }
+      });
       return true;
     }
-    throw new Error('No local browser storage options available!');
+
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
   }
 
 }
+
+
+/**
+ * Exports are for Jest who uses Node for Travis-CI tests on gh-pages branch
+ * https://javascript-utilities.github.io/browser-storage/
+ */
+if (typeof(module) !== 'undefined') module.exports = Browser_Storage;
