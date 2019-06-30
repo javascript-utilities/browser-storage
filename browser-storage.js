@@ -29,8 +29,8 @@ class Browser_Storage {
   /**
    * Sets properties used by other methods of this class
    * @returns {none}
-   * @property {boolean} supports_local_storage - What `this.supportsLocalStorage()` has to say
-   * @property {boolean} supports_cookies       - What `this.supportsCookies()` has to say
+   * @property {boolean} supports_local_storage - What `this.supportsLocalStorage()` had to say
+   * @property {boolean} supports_cookies       - What `this.supportsCookies()` had to say
    * @property {boolean} storage_available      - If either of the above is `true`
    * @this Browser_Storage
    * @class
@@ -53,7 +53,7 @@ class Browser_Storage {
   }
 
   /**
-   * Note, use `this.supports_local_storage` instead within tests.
+   * Tests and reports `boolean` if `localStorage` is available
    * @returns {boolean}
    */
   supportsLocalStorage() {
@@ -68,6 +68,7 @@ class Browser_Storage {
   }
 
   /**
+   * Reports if `navigator.cookieEnabled` or `document.cookie` are available
    * Note, use `this.supports_cookies` instead within tests.
    * @returns {boolean}
    * @this Browser_Storage
@@ -89,7 +90,7 @@ class Browser_Storage {
   }
 
   /**
-   * Gets decoded value for given key
+   * Gets decoded/JSON value for given key
    * @returns {?boolean|?number|?string|?undefined}
    * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number} key - Name of key to look up value for.
@@ -139,7 +140,7 @@ class Browser_Storage {
   }
 
   /**
-   * Stores client settings within browser, _serverless_ in the truest scene
+   * Stores encoded JSON within browser
    * @returns {boolean}
    * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number}           key - _variable name_ to store value under
@@ -194,7 +195,7 @@ class Browser_Storage {
   }
 
   /**
-   * Clears **all** client settings from either localStorage or cookies
+   * Clears **all** stored values from either localStorage or cookies
    * @returns {boolean}
    * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
@@ -206,11 +207,8 @@ class Browser_Storage {
     } else if (this.supports_cookies) {
       document.cookie.split(';').forEach((cookie) => {
         const key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
-        if (typeof(key) == 'string' || typeof(key) == 'number') {
-          this.remove(key);
-        } else {
-          return false;
-        }
+        if (!key) return false;
+        this.remove(key);
       });
       return true;
     }
