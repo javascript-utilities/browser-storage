@@ -1,0 +1,35 @@
+{
+  "name": "browser-storage",
+  "version": "0.0.1",
+  "description": "Tests for a client side JavaScript wrapper for localStorage and document.cookie interactions",
+  "main": "test-javascript/browser-storage.test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "roots": [
+      ".ci-jest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javascript-utilities/browser-storage.git"
+  },
+  "keywords": [
+    "localstorage",
+    "cookies",
+    "submodule",
+    "javascript-library"
+  ],
+  "author": "S0AndS0",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/javascript-utilities/browser-storage/issues"
+  },
+  "homepage": "https://github.com/javascript-utilities/browser-storage",
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
+}
