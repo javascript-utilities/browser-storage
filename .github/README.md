@@ -4,10 +4,10 @@
   "&#x2B06; Top of this page"
 
 
-[`Browser_Storage.js`][browser_storage__master__browser_storage], a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
+[`Browser_Storage.js`][browser_storage__master__source_code], a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
 
 
-[![Open Issues][badge__issues]][link__issues__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage]
+[![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage] [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Latest commits][badge__commits__browser_storage__master]][commits__browser_storage__master]
 
 
 ------
@@ -27,7 +27,6 @@
 - [&#x1F5D2; Notes][notes]
 
 - [:copyright: License][heading__license]
-
 
 
 ------
@@ -241,36 +240,71 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
 
-[organization__master__readme__submodules]:
-  https://github.com/javascript-utilities/.github/blob/master/README.md#submodules
-  "&#9851; The hows, whys, and what fores submodules from Git are used"
-
-
-[browser_storage__community]:
-  https://github.com/javascript-utilities/browser-storage/community
-
-[browser_storage__master__browser_storage]:
-  https://github.com/javascript-utilities/browser-storage/blob/master/browser-storage.js
-  "Source code of this project, one JavaScript file of ~108 lines of actionable code!"
-
 
 [badge__deepscan__browser_storage]:
   https://deepscan.io/api/teams/4392/projects/6156/branches/49668/badge/grade.svg
 
 [deepscan__browser_storage]:
   https://deepscan.io/dashboard#view=project&tid=4392&pid=6156&bid=49668
-  "&#x1F916; This _duke_ finds JavaScript bugs, all hail our robot overloads!"
+  "&#x1F916; All hail our robot overloads!"
 
 
-[badge__issues]: https://img.shields.io/github/issues/javascript-utilities/browser-storage.svg
+[badge__travis_ci__browser_storage]:
+  https://img.shields.io/travis/javascript-utilities/browser-storage/gh-pages.svg
 
-[link__issues__browser_storage]:
+[travis_ci__browser_storage]:
+  https://travis-ci.com/javascript-utilities/browser-storage
+  "&#x1F6E0; Automated tests with Jest and build logs"
+
+
+
+[organization__master__readme__submodules]:
+  https://github.com/javascript-utilities/.github/blob/master/README.md#submodules
+  "&#9851; The hows, whys, and what fores submodules from Git are used"
+
+
+[badge__commits__browser_storage__master]:
+  https://img.shields.io/github/last-commit/javascript-utilities/browser-storage/master.svg
+
+[commits__browser_storage__master]:
+  https://github.com/javascript-utilities/browser-storage/commits/master
+  "&#x1F4DD; History of changes on this branch"
+
+
+
+[browser_storage__community]:
+  https://github.com/javascript-utilities/browser-storage/community
+
+
+
+[badge__demo__browser_storage]:
+  https://img.shields.io/website/https/javascript-utilities.github.io/browser-storage/index.html.svg?down_color=darkorange&down_message=Offline&label=Demo&logo=Demo%20Site&up_color=success&up_message=Online
+
+[demo__browser_storage]:
+  https://javascript-utilities.github.io/browser-storage/index.html
+  "&#x1F52C; Open a console to interact with `storage` instance; no clone required for tests!"
+
+
+[badge__issues__browser_storage]:
+  https://img.shields.io/github/issues/javascript-utilities/browser-storage.svg
+
+[issues__browser_storage]:
   https://github.com/javascript-utilities/browser-storage/issues
   "&#x2622; Search for and _bump_ existing issues or open new issues for project maintainer to address."
 
 
-[badge__travis_ci__browser_storage]: https://img.shields.io/travis/javascript-utilities/browser-storage/gh-pages.svg
+[badge__pull_requests__browser_storage]:
+  https://img.shields.io/github/issues-pr/javascript-utilities/browser-storage.svg
 
-[travis_ci__browser_storage]:
-  https://travis-ci.com/javascript-utilities/browser-storage
-  "&#x1F6E0; Automated tests and build logs"
+[pull_requests__browser_storage]:
+  https://github.com/javascript-utilities/browser-storage/pulls
+  "&#x1F3D7; Pull Request friendly, though please check the Community guidelines"
+
+
+
+[badge__master__browser_storage__source_code]:
+  https://img.shields.io/github/size/javascript-utilities/browser-storage/browser-storage.js.svg?label=Browser_Storage.js
+
+[browser_storage__master__source_code]:
+  https://github.com/javascript-utilities/browser-storage/blob/master/browser-storage.js
+  "&#x2328; Project source, one JavaScript file with ~108 lines of actionable code!"
