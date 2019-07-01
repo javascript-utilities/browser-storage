@@ -24,7 +24,7 @@
   - [&#x1F578; Edit Your HTML][heading__edit_your_html]
   - [:floppy_disk: Commit and Push][heading__commit_and_push]
 
-- [Considerations]
+- [&#x1F5D2; Notes][notes]
 
 - [:copyright: License][heading__license]
 
@@ -199,7 +199,10 @@ git push origin gh-pages
 ___
 
 
-## Considerations
+## Notes
+[notes]:
+  #notes
+  "&#x1F5D2; Additional notes and links that may be worth clicking in the future"
 
 
 The `get()` method returns **`undefined`** for undefined values, avoid setting keys to _`"undefined"`_ to avoid confusion.
