@@ -91,18 +91,18 @@ class Browser_Storage {
 
   /**
    * Gets decoded/JSON value for given key
-   * @returns {?boolean|?number|?string|?undefined}
+   * @returns {*}
    * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number} key - Name of key to look up value for.
    * @this Browser_Storage
    */
   get(key) {
     const encoded_key = encodeURIComponent(key);
-    let decoded_value = undefined;
+    let decoded_value = null;
     if (this.supports_local_storage) {
       decoded_value = decodeURIComponent(localStorage.getItem(encoded_key));
     } else if (this.supports_cookies) {
-      let cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
+      const cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
       decoded_value = cookie_data ? decodeURIComponent(cookie_data[2]) : null;
     }
 
@@ -144,8 +144,8 @@ class Browser_Storage {
    * @returns {boolean}
    * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number}           key - _variable name_ to store value under
-   * @param {boolean|number|string} value - stored either under localStorage or as a cookie
-   * @param {number}         days_to_live - how long a browser is suggested to keep cookies
+   * @param {*}                     value - stored either under localStorage or as a cookie
+   * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
    * @this Browser_Storage
    */
   set(key, value, days_to_live = false) {
@@ -207,8 +207,7 @@ class Browser_Storage {
     } else if (this.supports_cookies) {
       document.cookie.split(';').forEach((cookie) => {
         const key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
-        if (!key) return false;
-        this.remove(key);
+        if (key) this.remove(key);
       });
       return true;
     }
