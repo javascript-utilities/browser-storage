@@ -29,15 +29,15 @@ class Browser_Storage {
   /**
    * Sets properties used by other methods of this class
    * @returns {none}
-   * @property {boolean} supports_local_storage - What `this.supportsLocalStorage()` had to say
-   * @property {boolean} supports_cookies       - What `this.supportsCookies()` had to say
+   * @property {boolean} supports_local_storage - What `this.constructor.supportsLocalStorage()` had to say
+   * @property {boolean} supports_cookies       - What `this.constructor.supportsCookies()` had to say
    * @property {boolean} storage_available      - If either of the above is `true`
    * @this Browser_Storage
    * @class
    */
   constructor() {
-    this.supports_local_storage = this.supportsLocalStorage();
-    this.supports_cookies = this.supportsCookies();
+    this.supports_local_storage = this.constructor.supportsLocalStorage();
+    this.supports_cookies = this.constructor.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
@@ -47,19 +47,22 @@ class Browser_Storage {
    * @this Browser_Storage
    */
   constructorRefresh() {
-    this.supports_local_storage = this.supportsLocalStorage();
-    this.supports_cookies = this.supportsCookies();
+    this.supports_local_storage = this.constructor.supportsLocalStorage();
+    this.supports_cookies = this.constructor.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
   /**
-   * Tests and reports `boolean` if `localStorage` is available
+   * Tests and reports `boolean` if `localStorage` has `setItem` and `removeItem` methods
    * @returns {boolean}
    */
-  supportsLocalStorage() {
+  static supportsLocalStorage() {
+    // Because Opera and may be other browsers `setItem`
+    // is available but with space set to _`0`_
     try {
       localStorage.setItem('test_key', true);
     } catch (e) {
+      if (!(e instanceof ReferenceError)) throw e;
       return false;
     } finally {
       localStorage.removeItem('test_key');
@@ -73,7 +76,7 @@ class Browser_Storage {
    * @returns {boolean}
    * @this Browser_Storage
    */
-  supportsCookies() {
+  static supportsCookies() {
     if (navigator.cookieEnabled) return true;
 
     try {
@@ -98,23 +101,15 @@ class Browser_Storage {
    */
   get(key) {
     const encoded_key = encodeURIComponent(key);
-    let decoded_value = null;
+    let decoded_value = undefined;
     if (this.supports_local_storage) {
-      decoded_value = decodeURIComponent(localStorage.getItem(encoded_key));
+      const raw_value = localStorage.getItem(encoded_key);
+      if (raw_value === null) return undefined;
+      return JSON.parse(decodeURIComponent(raw_value));
     } else if (this.supports_cookies) {
       const cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
-      decoded_value = cookie_data ? decodeURIComponent(cookie_data[2]) : null;
-    }
-
-    if (this.supports_local_storage || this.supports_cookies) {
-      // Ignore SyntaxError from decoded strings
-      //  and if so return decoded value instead
-      try {
-        return JSON.parse(decoded_value);
-      } catch (e) {
-        if (!(e instanceof SyntaxError)) throw e;
-      }
-      return decoded_value;
+      if (cookie_data === null) return undefined;
+      return JSON.parse(decodeURIComponent(cookie_data[2]));
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
