@@ -51,6 +51,37 @@ body {
 
 
 /**
+ * Styling test input/output elements
+ */
+
+.container__live_tests {
+  list-style: none;
+  text-align: left;
+  max-width: 80%;
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.live_tests__output__get__value:empty::after {
+  content: attr(data-after);
+  display: block;
+}
+
+.mouse__no_touch {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.mouse__default {
+  cursor: default;
+}
+
+
+/**
  * Checkbox hacks
  */
 .hidden__input {

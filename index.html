@@ -7,42 +7,9 @@
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link type="text/css" href="assets/css/main.css" rel="stylesheet"/>
+
     <script src="assets/javascript-modules/browser-storage/browser-storage.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-      const storage = new Browser_Storage();
-      if (storage.storage_available != true) throw new Error('We may never have any memory of this...');
-
-
-      function restore_settings() {
-        let privacy_notice_read = storage.get('checkbox__privacy_notice');
-        if (privacy_notice_read != 'true' && privacy_notice_read != true) return false;
-
-        document.getElementById('trigger__privacy_notice').checked = true;
-        return true;
-      }
-
-
-      function store_settings() {
-        let privacy_notice_read = storage.get('checkbox__privacy_notice');
-        if (privacy_notice_read != true) return false;
-        if (document.getElementById('trigger__privacy_notice').checked != true) return false;
-
-        storage.set('checkbox__privacy_notice', true, 365);
-        return true;
-      }
-
-
-      function toggle_privacy_notice(input_element) {
-        if (input_element.checked == true) {
-          storage.set('checkbox__privacy_notice', input_element.checked, 365);
-          return true;
-        }
-        storage.remove('checkbox__privacy_notice');
-        storage.clear();
-        return false;
-      }
-    </script>
+    <script src="assets/javascript/main.js" type="text/javascript"></script>
   </head>
 
 
@@ -71,6 +38,49 @@
         JavaScript doing things for the above mentioned actions.
       </p>
     </div>
+
+
+    <ul class="container__live_tests">
+      <h2>Test some features</h2>
+      <li>
+        <h3>Set a value under a key</h3>
+        <form class="">
+          <textarea name="set_key"
+                    id="input_text__set__key"
+                    class="live_tests__input_text__set__key"
+                    rows="1"
+                    >Input a Key</textarea>
+          <br>
+          <textarea name="set_value"
+                    id="input_text__set__value"
+                    class="live_tests__input_text__set__value"
+                    rows="1"
+                    >Input a Value</textarea>
+          <br>
+          <input type="button"
+                 onclick="input_text_setItem('input_text__set__key', 'input_text__set__value');"
+                 name="set"
+                 value="Set">
+        </form>
+      </li>
+
+      <li>
+        <h3>Get some value from a key</h3>
+        <input class="live_tests__input__get__key"
+               id="input_text__get__key"
+               type="text"
+               name="key"
+               value="input a Key">
+        <input type="button"
+               onclick="input_text_get('input_text__get__key', 'output__value', false);"
+               name="get"
+               value="Get">
+
+        <p class="live_tests__output__get__value mouse__no_touch mouse__default"
+           id="output__value"
+           data-after="undefined"></p>
+      </li>
+    </ul>
 
     <input type="checkbox"
            name="checkbox__privacy_notice"
