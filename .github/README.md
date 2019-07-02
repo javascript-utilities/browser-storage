@@ -24,6 +24,8 @@
   - [&#x1F578; Edit Your HTML][heading__edit_your_html]
   - [:floppy_disk: Commit and Push][heading__commit_and_push]
 
+- [:scroll: Browser_Storage.js References][heading__api_references]
+
 - [&#x1F5D2; Notes][notes]
 
 - [:copyright: License][heading__license]
@@ -198,6 +200,45 @@ git push origin gh-pages
 ___
 
 
+## Browser Storage References
+[heading__api_references]:
+  #browser-storage-references
+  "&#x1F4DC;"
+
+
+**Properties of instance**
+
+
+- `supports_cookies` contains `boolean`, cookies support
+
+- `supports_local_storage` contains `boolean`, support for `localStorage`
+
+- `storage_available` contains `boolean`, storage supported during initialization
+
+
+**Methods of instance**
+
+
+- `supportsLocalStorage()`, returns `boolean`, availability of `localStorage`
+
+- `supportsCookies()`, returns `boolean`, availability of cookies
+
+- `constructorRefresh()` returns `boolean`, a _copy_ of `constructor()` that may be called after initialization to refresh class properties
+
+- `get(key)`, returns `undefined` or value of any valid `JSON` associated with passed `key`
+
+- `remove(key)`, returns `boolean` after removing values associated with passed `key`
+
+- `set(key, value, days_to_live)`, associates `key` with `value` for a number of `days_to_live`
+
+- `keys()` returns `Array`, that may point to stored values
+
+- `clear()` returns `boolean`, after removing all locally stored _`value`s_ from browser storage
+
+
+___
+
+
 ## Notes
 [notes]:
   #notes
@@ -207,10 +248,27 @@ ___
 The `get()` method returns **`undefined`** for undefined values, avoid setting keys to _`"undefined"`_ to avoid confusion.
 
 
-To begin developing please clone to a separate directory, then checkout the `gh-pages` branch which tracks the `master` branch as a submodule. Prior to issuing a Pull Request please check the [Community][browser_storage__community] for any relevant updates.
+Note, if/when this Browser Storage _falls-back_ to using cookies both `remove(key)` and `clear()` methods require a page refresh to also remove stored `key` names. Additionally by default each request from browsers that use cookies as a _fall-back_ will **send** cookies **unless** the server sends _`Set-Cookies`_ to request that the browser will stop-it, eg...
 
 
-Opening **new** Issues is supper! However, to avoid attention fragmentation be certain to search for related Issues that could be added to instead.
+```
+server {
+    listen 80;
+    server_name static.example.com;
+    root /var/www/example.com;
+
+    fastcgi_hide_header Set-Cookie;
+}
+```
+
+
+... as suggested by [`jesin` on DigitalOcean][digital_ocean__nginx_cookie_free_headers] or search for `cookie-free domain` along with the server name in question.
+
+
+When this `Browser_Storage` is using `localStorage` then _`set`'s_ `days_to_live` is currently _meaningless_.
+
+
+Opening **new** Issues is supper! However, to avoid attention fragmentation be certain to search for related Issues that could be added to instead. Developers please clone to a separate directory, then checkout the `gh-pages` branch which tracks the `master` branch as a submodule, and prior to issuing a Pull Request check the [Community][browser_storage__community] for any relevant updates.
 
 
 ___
@@ -237,8 +295,15 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+by `jesin`
+on
 ```
 
+
+
+[digital_ocean__nginx_cookie_free_headers]:
+  https://www.digitalocean.com/community/questions/how-to-set-up-nginx-cookie-free-headers
+  "&#x1F517; DigitalOcean &#x1F517; How to set-up Nginx cookie free headers?"
 
 
 [badge__deepscan__browser_storage]:
