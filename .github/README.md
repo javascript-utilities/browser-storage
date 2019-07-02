@@ -7,7 +7,12 @@
 [`Browser_Storage.js`][browser_storage__master__source_code], a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
 
 
-[![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage] [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Latest commits][badge__commits__browser_storage__master]][commits__browser_storage__master]
+> Check the [`gh-pages` branch][browser_storage__gh_pages] for source files of [live demo][demo__browser_storage] hosted by GitHub Pages, development tips, and Continuous Integration configurations.
+>
+> The following covers how to install this branch as a submodule within your own project, notes for private hosting, and methods that `Browser_Storage.js` currently has defined.
+
+
+## [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Latest commits][badge__commits__browser_storage__master]][commits__browser_storage__master] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage]
 
 
 ------
@@ -34,6 +39,7 @@
 ------
 
 
+
 ## Quick Start
 [heading__quick_start]:
   #quick-start
@@ -56,7 +62,7 @@ _module_relative_path='assets/javascript-modules/browser-storage'
 cd "<your-git-project-path>"
 
 git checkout gh-pages
-git submodule add -b master "${_module_https_url}" "${_module_relative_path}"
+git submodule add -b master --name browser-storage "${_module_https_url}" "${_module_relative_path}"
 
 git submodule update
 cd "${_module_relative_path}"
@@ -131,8 +137,8 @@ Update/upgrade submodules via
       throw new Error('No storage available!');
     }
 
-    storage.set('test__string', 'Spam!', 3);
-    if (storage.get('test__string') !== 'Spam!') {
+    storage.setItem('test__string', 'Spam!', 3);
+    if (storage.getItem('test__string') !== 'Spam!') {
       throw new Error('Storage cannot be relied upon!')
     }
 
@@ -150,11 +156,11 @@ Open a web browser pointing at the server hosting the above changes and try inte
 
 
 ```JavaScript
-storage.set('something', true, 3);
-console.log("storage.get('something') -> " + storage.get('something'));
+storage.setItem('something', true, 3);
+console.log("storage.getItem('something') -> " + storage.getItem('something'));
 
-storage.set('another-thing', {first: true}, 3);
-const another_thing = storage.get('another-thing');
+storage.setItem('another-thing', {first: true}, 3);
+const another_thing = storage.getItem('another-thing');
 console.log('another_thing -> ' + another_thing);
 ```
 
@@ -203,7 +209,7 @@ ___
 ## Browser Storage References
 [heading__api_references]:
   #browser-storage-references
-  "&#x1F4DC;"
+  "&#x1F4DC; The incantations that Browser_Storage understands"
 
 
 **Properties of instance**
@@ -225,11 +231,11 @@ ___
 
 - `constructorRefresh()` returns `boolean`, a _copy_ of `constructor()` that may be called after initialization to refresh class properties
 
-- `get(key)`, returns `undefined` or value of any valid `JSON` associated with passed `key`
+- `getItem(key)`, returns `undefined` or value of any valid `JSON` associated with passed `key`
 
-- `remove(key)`, returns `boolean` after removing values associated with passed `key`
+- `removeItem(key)`, returns `boolean` after removing values associated with passed `key`
 
-- `set(key, value, days_to_live)`, associates `key` with `value` for a number of `days_to_live`
+- `setItem(key, value, days_to_live)`, associates `key` with `value` for a number of `days_to_live`
 
 - `keys()` returns `Array`, that may point to stored values
 
@@ -245,10 +251,10 @@ ___
   "&#x1F5D2; Additional notes and links that may be worth clicking in the future"
 
 
-The `get()` method returns **`undefined`** for undefined values, avoid setting keys to _`"undefined"`_ to avoid confusion.
+The `getItem()` method returns **`undefined`** for undefined values, avoid setting keys to _`"undefined"`_ to avoid confusion.
 
 
-Note, if/when this Browser Storage _falls-back_ to using cookies both `remove(key)` and `clear()` methods require a page refresh to also remove stored `key` names. Additionally by default each request from browsers that use cookies as a _fall-back_ will **send** cookies **unless** the server sends _`Set-Cookies`_ to request that the browser will stop-it, eg...
+Note, if/when this Browser Storage _falls-back_ to using cookies both `removeItem(key)` and `clear()` methods require a page refresh to also remove stored `key` names. Additionally by default each request from browsers that use cookies as a _fall-back_ will **send** cookies **unless** the server sends _`Set-Cookies`_ to request that the browser will stop-it, eg...
 
 
 ```
@@ -336,9 +342,14 @@ on
   "&#x1F4DD; History of changes on this branch"
 
 
-
 [browser_storage__community]:
   https://github.com/javascript-utilities/browser-storage/community
+  "&#x1F331; Dedicated to functioning code"
+
+
+[browser_storage__gh_pages]:
+  https://github.com/javascript-utilities/browser-storage/tree/gh-pages
+  "Source code examples hosted thanks to GitHub Pages!"
 
 
 
