@@ -7,7 +7,7 @@
 [`Browser_Storage.js`][browser_storage__master__source_code], a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
 
 
-> Check the [`gh-pages` branch][browser_storage__gh_pages] for source files of [live demo][demo__browser_storage] hosted by GitHub Pages, development tips, and Continuous Integration configurations.
+> Check the [`gh-pages` branch][browser_storage__gh_pages] for source files of [live demo][demo__browser_storage] hosted by GitHub Pages, development tips for your first Pull Request, and Continuous Integration configurations for automated tests.
 >
 > The following covers how to install this branch as a submodule within your own project, notes for private hosting, and methods that `Browser_Storage.js` currently has defined.
 
@@ -23,7 +23,7 @@
 
 - [&#x2B06; Top of ReadMe File][heading__title]
 
-- [&#9889; Quick Start][heading__quick_start]
+- [:zap: Quick Start][heading__quick_start]
 
   - [:memo: Edit Your ReadMe File][heading__edit_your_readme_file]
   - [&#x1F578; Edit Your HTML][heading__edit_your_html]
@@ -90,7 +90,7 @@ git checkout tags/v0.0.1 -b loc-v0.0.1
 ### Edit Your ReadMe File
 [heading__edit_your_readme_file]:
   #edit-your-readme-file
-  "&#X1F4DD; Suggested additions so everyone has a good time with submodules"
+  "&#x1F4DD; Suggested additions so everyone has a good time with submodules"
 
 
 **Quick Start Section**
@@ -200,7 +200,7 @@ git push origin gh-pages
 ```
 
 
-**:tada: Excellent! :tada:**
+**:tada: Excellent :tada:** your site is now ready to beguine unitizing the _`storage`_ instance within other JavaScript projects!
 
 
 ___
@@ -212,7 +212,7 @@ ___
   "&#x1F4DC; The incantations that Browser_Storage understands"
 
 
-**Properties of instance**
+**Properties**
 
 
 - `supports_cookies` contains `boolean`, cookies support
@@ -222,7 +222,7 @@ ___
 - `storage_available` contains `boolean`, storage supported during initialization
 
 
-**Methods of instance**
+**Methods**
 
 
 - `supportsLocalStorage()`, returns `boolean`, availability of `localStorage`
@@ -287,7 +287,7 @@ ___
 
 
 ```
-Browser Storage documentation on a submodule for Git tracked web sites
+Browser Storage submodule quick start documentation for Git tracked web sites
 Copyright (C) 2019  S0AndS0
 
 This program is free software: you can redistribute it and/or modify
