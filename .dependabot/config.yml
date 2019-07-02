@@ -1,0 +1,48 @@
+## Hints:
+##   - https://dependabot.com/docs/config-file/
+##   - https://github.com/dependabot/dependabot-core/blob/master/.dependabot/config.yml
+
+
+
+version: 1
+update_configs:
+  - package_manager: "submodules"
+    target_branch: "gh-pages"
+    directory: "/"
+    update_schedule: "daily"
+
+    allowed_updates:
+      - match:
+        update_type: "all"
+
+    default_reviewers:
+    - "S0AndS0"
+
+    default_labels:
+    - "dependencies"
+    - "dependabot"
+
+    commit_message:
+      prefix: ":robot: Submodule Update"
+      include_scope: false
+
+
+  - package_manager: "javascript"
+    target_branch: "gh-pages"
+    directory: "/"
+    update_schedule: "live"
+
+    allowed_updates:
+      - match:
+        update_type: "all"
+
+    default_reviewers:
+    - "S0AndS0"
+
+    default_labels:
+    - "dependencies"
+    - "dependabot"
+
+    commit_message:
+      prefix: ":robot: Development Update"
+      include_scope: false
