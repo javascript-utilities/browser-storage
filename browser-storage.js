@@ -21,8 +21,8 @@
  *     console.warn('Falling back to cookies!');
  *   }
  *   // Do stuff with local storage of browser!
- *   storage.set('test__string', 'Spam!', 7);
- *   console.log("storage.get('test__string') -> " + storage.get('test__string'));
+ *   storage.setItem('test__string', 'Spam!', 7);
+ *   console.log("storage.getItem('test__string') -> " + storage.getItem('test__string'));
  * }
  */
 class Browser_Storage {
@@ -86,7 +86,7 @@ class Browser_Storage {
     }
 
     if (document.cookie.indexOf('testcookie') != -1) {
-      this.remove('testcookie');
+      this.removeItem('testcookie');
       return true;
     }
     return false;
@@ -99,7 +99,7 @@ class Browser_Storage {
    * @param {string|number} key - Name of key to look up value for.
    * @this Browser_Storage
    */
-  get(key) {
+  getItem(key) {
     const encoded_key = encodeURIComponent(key);
     let decoded_value = undefined;
     if (this.supports_local_storage) {
@@ -121,14 +121,14 @@ class Browser_Storage {
    * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
-  remove(key) {
+  removeItem(key) {
     if (this.supports_local_storage) {
       localStorage.removeItem(key)
       return true;
     } else if (this.supports_cookies) {
       // Note, unsetting and expiring in the past is how
       // to remove one cookie upon the next page load.
-      this.set(key, '', -7);
+      this.setItem(key, '', -7);
       return true;
     }
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
@@ -143,7 +143,7 @@ class Browser_Storage {
    * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
    * @this Browser_Storage
    */
-  set(key, value, days_to_live = false) {
+  setItem(key, value, days_to_live = false) {
     const encoded_key = encodeURIComponent(key);
     const encoded_value = encodeURIComponent(JSON.stringify(value));
 
@@ -202,7 +202,7 @@ class Browser_Storage {
     } else if (this.supports_cookies) {
       document.cookie.split(';').forEach((cookie) => {
         const key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
-        if (key) this.remove(key);
+        if (key) this.removeItem(key);
       });
       return true;
     }
