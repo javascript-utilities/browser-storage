@@ -59,7 +59,7 @@ class Browser_Storage_Test {
   }
 
   /**
-   * Attempts to break `set()` and `get()` methods for `Browser_Storage` instance
+   * Attempts to break `setItem()` and `getItem()` methods for `Browser_Storage` instance
    * @returns {none}
    * @param {forced_states} states - If object, passes to `this.forceStorageState`
    * @this Browser_Storage_Test
@@ -69,22 +69,22 @@ class Browser_Storage_Test {
       this.forceStorageState(states);
     }
 
-    test('Boolean with `set()` and `get()` methods', () => {
-      expect(this.storage.set('test__boolean', true, 3)).toBe(true);
-      expect(this.storage.get('test__boolean')).toBe(true);
+    test('Boolean with `setItem()` and `getItem()` methods', () => {
+      expect(this.storage.setItem('test__boolean', true, 3)).toBe(true);
+      expect(this.storage.getItem('test__boolean')).toBe(true);
     });
 
-    test('String with `set()` and `get()` methods', () => {
-      expect(this.storage.set('test__string', 'Spam!', 3)).toBe(true);
-      expect(this.storage.get('test__string')).toBe('Spam!');
+    test('String with `setItem()` and `getItem()` methods', () => {
+      expect(this.storage.setItem('test__string', 'Spam!', 3)).toBe(true);
+      expect(this.storage.getItem('test__string')).toBe('Spam!');
     });
 
-    test('List with  `set()` and `get()` methods', () => {
-      expect(this.storage.set('test__list', [1, "two", 4.2], 3)).toBe(true);
-      expect(this.storage.get('test__list')).toEqual([1, "two", 4.2]);
+    test('List with  `setItem()` and `getItem()` methods', () => {
+      expect(this.storage.setItem('test__list', [1, "two", 4.2], 3)).toBe(true);
+      expect(this.storage.getItem('test__list')).toEqual([1, "two", 4.2]);
     });
 
-    test('JSON with `set()` and `get()` methods', () => {
+    test('JSON with `setItem()` and `getItem()` methods', () => {
       const test_json = {
         first_key: true,
         second_key: "Spam!",
@@ -102,26 +102,26 @@ class Browser_Storage_Test {
         ],
       };
 
-      expect(this.storage.set('test__json', test_json, 3)).toBe(true);
+      expect(this.storage.setItem('test__json', test_json, 3)).toBe(true);
 
-      const stored_json = this.storage.get('test__json');
+      const stored_json = this.storage.getItem('test__json');
       Object.keys(test_json).forEach((key) => {
         expect(test_json[key]).toStrictEqual(stored_json[key]);
       });
     });
 
-    test('CharCode value with `set()` and `get()` methods', () => {
+    test('CharCode value with `setItem()` and `getItem()` methods', () => {
       // `9749` is decimal for _`hot beverage`_
       const test_char = String.fromCharCode('9749');
-      expect(this.storage.set('test__charcode', test_char, 3)).toBe(true);
-      expect(this.storage.get('test__charcode')).toBe(test_char);
+      expect(this.storage.setItem('test__charcode', test_char, 3)).toBe(true);
+      expect(this.storage.getItem('test__charcode')).toBe(test_char);
     });
 
-    test('CharCode key with `set()` and `get()` methods', () => {
+    test('CharCode key with `setItem()` and `getItem()` methods', () => {
       // `9842` is decimal for _`universal recycling`_
       const test_char = String.fromCharCode('9842');
-      expect(this.storage.set(test_char, 'universal recycling', 3)).toBe(true);
-      expect(this.storage.get(test_char)).toBe('universal recycling');
+      expect(this.storage.setItem(test_char, 'universal recycling', 3)).toBe(true);
+      expect(this.storage.getItem(test_char)).toBe('universal recycling');
     });
 
   }
@@ -134,15 +134,15 @@ class Browser_Storage_Test {
   errorThrowers() {
     this.forceStorageState({supports_local_storage: false, supports_cookies: false});
 
-    test('Boolean `set()` without storage support', () => {
+    test('Boolean `setItem()` without storage support', () => {
       expect(() => {
-        this.storage.set('test__boolean', true, 3);
+        this.storage.setItem('test__boolean', true, 3);
       }).toThrow(ReferenceError);
     });
 
     test('Getting previously set `test__boolean` without storage support', () => {
       expect(() => {
-        this.storage.get('test__boolean');
+        this.storage.getItem('test__boolean');
       }).toThrow(ReferenceError);
     });
   }
@@ -160,8 +160,8 @@ class Browser_Storage_Test {
 
     test('That values can be removed by key', () => {
       this.storage.keys().forEach((key) => {
-        expect(this.storage.remove(key)).toBe(true);
-        expect(this.storage.get(key)).toBe(undefined);
+        expect(this.storage.removeItem(key)).toBe(true);
+        expect(this.storage.getItem(key)).toBe(undefined);
       });
     });
 
@@ -171,7 +171,7 @@ class Browser_Storage_Test {
     });
 
     test('Than non-set key is undefined', () => {
-      expect(this.storage.get('null')).toBe(undefined);
+      expect(this.storage.getItem('null')).toBe(undefined);
     });
   }
 
