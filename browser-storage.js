@@ -5,6 +5,15 @@
  *   https://jsdoc.app/about-getting-started.html
  *   https://jestjs.io/docs/en/getting-started
  *   https://stackoverflow.com/questions/5639346
+ *   https://stackoverflow.com/questions/28739745
+ */
+
+
+/**
+ * @typedef stored_data
+ * @type {Object}
+ * @property {string|number|float} key   - `data.key` from `localStorage` or cookies
+ * @property {*}                   value - `data.value` from `localStorage` or cookies
  */
 
 
@@ -123,13 +132,12 @@ class Browser_Storage {
    */
   removeItem(key) {
     if (this.supports_local_storage) {
-      localStorage.removeItem(key)
+      localStorage.removeItem(key);
       return true;
     } else if (this.supports_cookies) {
       // Note, unsetting and expiring in the past is how
       // to remove one cookie upon the next page load.
-      this.setItem(key, '', -7);
-      return true;
+      return this.setItem(key, '', -7);
     }
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
   }
@@ -181,7 +189,7 @@ class Browser_Storage {
     } else if (this.supports_cookies) {
       let cookie_keys = [];
       document.cookie.split(';').forEach((pare) => {
-        cookie_keys.push(pare.split('=')[0]);
+        cookie_keys.push(pare.split('=')[0].trim());
       });
       return cookie_keys;
     }
@@ -201,13 +209,56 @@ class Browser_Storage {
       return true;
     } else if (this.supports_cookies) {
       document.cookie.split(';').forEach((cookie) => {
-        const key = encodeURIComponent(cookie.split('=')[0].replace(/(^\s+|\s+$)/g, ''));
-        if (key) this.removeItem(key);
+        const decoded_key = decodeURIComponent(cookie.split('=')[0].trim());
+        this.removeItem(decoded_key);
       });
       return true;
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+  }
+
+  /**
+   * Generates `{data.key: data.value}` JSON from localStorage or cookies
+   * @yields {stored_data}
+   * @this Browser_Storage
+   */
+  *iterator() {
+    if (this.supports_local_storage) {
+      const keys = Object.keys(localStorage);
+      for (let i = 0; i < keys.length; i++) {
+        const encoded_value = localStorage.getItem(keys[i]);
+        const decoded_key = decodeURIComponent(keys[i]);
+        if (encoded_value === null) {
+          console.warn('');
+          yield {key: decoded_key, value: undefined};
+        } else {
+          yield {key: decoded_key, value: JSON.parse(decodeURIComponent(encoded_value))};
+        }
+      }
+    } else if (this.supports_cookies) {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const encoded_key = cookies[i].split('=')[0].trim();
+        const encoded_value = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
+        if (encoded_value === null) {
+          yield {key: decodeURIComponent(encoded_key), value: undefined};
+        } else {
+          yield {key: decodeURIComponent(encoded_key), value: JSON.parse(decodeURIComponent(encoded_value[2]))};
+        }
+      }
+    } else {
+      throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+    }
+  }
+
+  /**
+   * See `this.iterator()` method
+   * @returns {stored_data}
+   * @this Browser_Storage
+   */
+  [Symbol.iterator]() {
+    return this.iterator();
   }
 
 }

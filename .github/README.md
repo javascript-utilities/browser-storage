@@ -51,7 +51,7 @@
 
 ```Bash
 _module_https_url='https://github.com/javascript-utilities/browser-storage.git'
-_module_relative_path='assets/javascript-modules/browser-storage'
+_module_relative_path='assets/javascript/modules/browser-storage'
 ```
 
 
@@ -124,28 +124,24 @@ Update/upgrade submodules via
 
 
 ```HTML
-<head>
-
-  <script src="assets/javascript-modules/browser-storage/browser-storage.js"
-          type="text/javascript"></script>
+<script src="assets/javascript/modules/browser-storage/browser-storage.js"
+        type="text/javascript"></script>
 
 
-  <script type="text/javascript">
-    const storage = new Browser_Storage();
+<script type="text/javascript">
+  const storage = new Browser_Storage();
 
-    if (!storage.storage_available) {
-      throw new Error('No storage available!');
-    }
+  if (!storage.storage_available) {
+    throw new Error('No storage available!');
+  }
 
-    storage.setItem('test__string', 'Spam!', 3);
-    if (storage.getItem('test__string') !== 'Spam!') {
-      throw new Error('Storage cannot be relied upon!')
-    }
+  storage.setItem('test__string', 'Spam!', 3);
+  if (storage.getItem('test__string') !== 'Spam!') {
+    throw new Error('Storage cannot be relied upon!')
+  }
 
-    console.log(':tada: Browser Storage seems to be available!');
-  </script>
-
-</head>
+  console.log(':tada: Browser Storage seems to be available!');
+</script>
 ```
 
 
@@ -174,7 +170,7 @@ console.log('another_thing -> ' + another_thing);
 
 ```Bash
 git add .gitmodules
-git add assets/javascript-modules/browser-storage
+git add assets/javascript/modules/browser-storage
 git add README.md
 
 
@@ -192,7 +188,7 @@ git commit -F- <<'EOF'
 
 - `.gitmodules` file, tracks other Git repository code utilized by this project
 
-- `assets/javascript-modules/browser-storage` submodule, Git tracked dependency
+- `assets/javascript/modules/browser-storage` submodule, Git tracked dependency
 EOF
 
 
@@ -200,7 +196,7 @@ git push origin gh-pages
 ```
 
 
-**:tada: Excellent :tada:** your site is now ready to beguine unitizing the _`storage`_ instance within other JavaScript projects!
+**:tada: Excellent :tada:** your site is now ready to begin unitizing the _`storage`_ instance within other JavaScript projects!
 
 
 ___
@@ -225,9 +221,9 @@ ___
 **Methods**
 
 
-- `supportsLocalStorage()`, returns `boolean`, availability of `localStorage`
+- `supportsLocalStorage()`, returns `boolean`, availability of `localStorage` support
 
-- `supportsCookies()`, returns `boolean`, availability of cookies
+- `supportsCookies()`, returns `boolean`, availability of cookies support
 
 - `constructorRefresh()` returns `boolean`, a _copy_ of `constructor()` that may be called after initialization to refresh class properties
 
@@ -240,6 +236,16 @@ ___
 - `keys()` returns `Array`, that may point to stored values
 
 - `clear()` returns `boolean`, after removing all locally stored _`value`s_ from browser storage
+
+
+**Iterator Example**
+
+
+```JavaScript
+for (let stored of storage) {
+  console.log(stored.key + ' -> ' stored.value);
+}
+```
 
 
 ___
@@ -271,7 +277,7 @@ server {
 ... as suggested by [`jesin` on DigitalOcean][digital_ocean__nginx_cookie_free_headers] or search for `cookie-free domain` along with the server name in question.
 
 
-When this `Browser_Storage` is using `localStorage` then _`set`'s_ `days_to_live` is currently _meaningless_.
+When `Browser_Storage` is using `localStorage` then _`set`'s_ `days_to_live` is currently _meaningless_.
 
 
 Opening **new** Issues is supper! However, to avoid attention fragmentation be certain to search for related Issues that could be added to instead. Developers please clone to a separate directory, then checkout the `gh-pages` branch which tracks the `master` branch as a submodule, and prior to issuing a Pull Request check the [Community][browser_storage__community] for any relevant updates.
