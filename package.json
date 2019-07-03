@@ -1,6 +1,6 @@
 {
   "name": "browser-storage",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tests for a client side JavaScript wrapper for localStorage and document.cookie interactions",
   "main": "test-javascript/browser-storage.test.js",
   "scripts": {

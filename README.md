@@ -3,6 +3,7 @@
   #browser-storage-development
   "&#x2B06; Top of this page"
 
+
 [`Browser_Storage.js`][browser_storage__master__source_code], a client side JavaScript wrapper for `localStorage` and `document.cookie` interactions.
 
 
@@ -99,7 +100,7 @@ git submodule update --init --recursive --remote
 ```
 
 
-**_`ls -1a assets/javascript-modules/browser-storage`_** example output
+**_`ls -1a assets/javascript/modules/browser-storage`_** example output
 
 
 ```Bash
@@ -123,7 +124,7 @@ git submodule update --init --recursive --remote
 
 
 ```Bash
-cd assets/javascript-modules/browser-storage
+cd assets/javascript/modules/browser-storage
 git checkout master
 
 
@@ -149,7 +150,7 @@ git branch --set-upstream-to=forked/master
 
 
 ```Bash
-#> Entering 'assets/javascript-modules/browser-storage'
+#> Entering 'assets/javascript/modules/browser-storage'
 #> On branch master
 #> Your branch is up-to-date with 'forked/master'.
 #> nothing to commit, working directory clean
@@ -162,7 +163,7 @@ git branch --set-upstream-to=forked/master
   "&#x1F4AF; After initial setup, run `npm test` prior to public commits"
 
 
-**Install development dependencies** for running tests via _`Jest`_ JavaScript testing framework
+**Installing development dependencies**
 
 
 ```Bash
@@ -170,11 +171,31 @@ npm install --save-dev
 ```
 
 
-**Run test** scripts under _`.ci-jest`_ subdirectory
+**Running tests**
 
 
 ```Bash
 npm test
+
+## Or to have Jest watch for changes to tests...
+
+npm run test-w
+```
+
+
+**Running coverage checks**
+
+
+```Bash
+npm run test-c
+```
+
+
+**Running local server**
+
+
+```Bash
+npm run test-s
 ```
 
 

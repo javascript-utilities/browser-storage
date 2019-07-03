@@ -33,12 +33,14 @@ class Browser_Storage_Test {
    * @class
    */
   constructor() {
-    this.storage = new (require('../assets/javascript-modules/browser-storage/browser-storage.js'))();
+    this.storage = new (require('../assets/javascript/modules/browser-storage/browser-storage.js'))();
   }
 
   runTests() {
     this.setAndGet();
     this.setAndGet({supports_local_storage: false});
+    this.iterability({supports_local_storage: true});
+    this.iterability({supports_local_storage: false});
     this.errorThrowers();
     this.resetsAndWipes();
   }
@@ -123,7 +125,6 @@ class Browser_Storage_Test {
       expect(this.storage.setItem(test_char, 'universal recycling', 3)).toBe(true);
       expect(this.storage.getItem(test_char)).toBe('universal recycling');
     });
-
   }
 
   /**
@@ -148,6 +149,30 @@ class Browser_Storage_Test {
   }
 
   /**
+   * Tests ways class may be iterated with
+   * @returns {none}
+   * @this Browser_Storage_Test
+   */
+  iterability(states = false) {
+    if (typeof(states) === 'object') {
+      this.forceStorageState(states);
+    }
+
+    test('Loopieness of storage instance', () => {
+      for (const data of this.storage) {
+        expect(this.storage.getItem(data.key)).toStrictEqual(data.value);
+      }
+    });
+
+    test('Iteratabliaty of storage instance', () => {
+      const storage_iter = this.storage.iterator();
+      let data; while (data = storage_iter.next().value) {
+        expect(this.storage.getItem(data.key)).toStrictEqual(data.value);
+      }
+    });
+  }
+
+  /**
    * Reports failures if any values _linger_ when wiping
    * @returns {none}
    * @this Browser_Storage_Test
@@ -163,11 +188,20 @@ class Browser_Storage_Test {
         expect(this.storage.removeItem(key)).toBe(true);
         expect(this.storage.getItem(key)).toBe(undefined);
       });
+      expect(this.storage.keys()).toStrictEqual([]);
     });
 
     this.forceStorageState({supports_local_storage: false});
-    test('Clearing cookies', () => {
+    test('Clearing cookies returns true', () => {
       expect(this.storage.clear()).toBe(true);
+    });
+
+    test('Any remaining keys have undefined values', () => {
+      console.log('this.storage.keys() -> ' + this.storage.keys().length);
+      this.storage.keys().forEach((key) => {
+        expect(this.storage.getItem(key)).toBe(undefined);
+        console.warn('this.storage.getItem("' + key + '") -> ' + this.storage.getItem(key));
+      });
     });
 
     test('Than non-set key is undefined', () => {
