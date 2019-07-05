@@ -102,9 +102,8 @@ class Browser_Storage {
     } catch (e) {
       if (!(e instanceof ReferenceError)) throw e;
       return false
-    } finally {
-      return true;
     }
+    return true;
   }
 
   /**
