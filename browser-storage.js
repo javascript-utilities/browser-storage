@@ -1,23 +1,4 @@
 /**
- * Thanks be to:
- *   https://www.w3schools.com/js/js_cookies.asp
- *   https://gist.github.com/steveosoule/5679949
- *   https://jsdoc.app/about-getting-started.html
- *   https://jestjs.io/docs/en/getting-started
- *   https://stackoverflow.com/questions/5639346
- *   https://stackoverflow.com/questions/28739745
- */
-
-
-/**
- * @typedef stored_data
- * @type {Object}
- * @property {string|number|float} key   - `data.key` from `localStorage` or cookies
- * @property {*}                   value - `data.value` from `localStorage` or cookies
- */
-
-
-/**
  * @author S0AndS0
  * @copyright AGPL-3.0
  * @example <caption>Quick Usage for Browser Storage</caption>
@@ -39,14 +20,14 @@ class Browser_Storage {
    * Sets properties used by other methods of this class
    * @returns {none}
    * @property {boolean} supports_local_storage - What `this.constructor.supportsLocalStorage()` had to say
-   * @property {boolean} supports_cookies       - What `this.constructor.supportsCookies()` had to say
+   * @property {boolean} supports_cookies       - What `this.supportsCookies()` had to say
    * @property {boolean} storage_available      - If either of the above is `true`
    * @this Browser_Storage
    * @class
    */
   constructor() {
     this.supports_local_storage = this.constructor.supportsLocalStorage();
-    this.supports_cookies = this.constructor.supportsCookies();
+    this.supports_cookies = this.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
@@ -57,7 +38,7 @@ class Browser_Storage {
    */
   constructorRefresh() {
     this.supports_local_storage = this.constructor.supportsLocalStorage();
-    this.supports_cookies = this.constructor.supportsCookies();
+    this.supports_cookies = this.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
@@ -80,25 +61,62 @@ class Browser_Storage {
   }
 
   /**
-   * Reports if `navigator.cookieEnabled` or `document.cookie` are available
-   * Note, use `this.supports_cookies` instead within tests.
+   * Reports if cookies are enabled. Note, use `this.supports_cookies` instead within tests.
    * @returns {boolean}
    * @this Browser_Storage
    */
-  static supportsCookies() {
-    if (navigator.cookieEnabled) return true;
-
-    try {
-      document.cookie = 'testcookie';
-    } catch (e) {
-      return false;
-    }
-
-    if (document.cookie.indexOf('testcookie') != -1) {
-      this.removeItem('testcookie');
-      return true;
+  supportsCookies() {
+    // Browser support detection must be interactive as some
+    // may be _full_ or not enabled without updating state!
+    if (this._setCookieItem('testcookie', '', 7)) {
+      return this._setCookieItem('testcookie', '', -7);
     }
     return false;
+  }
+
+  /**
+   * Use `this.setItem` instead. Attempts to set cookie
+   * @returns {boolean}
+   * @param {string|number}           key - _variable name_ to store value under
+   * @param {*}                     value - stored either under localStorage or as a cookie
+   * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
+   */
+  _setCookieItem(key, value, days_to_live = false) {
+    const encoded_key = encodeURIComponent(key);
+    const encoded_value = encodeURIComponent(JSON.stringify(value));
+
+    let expires = '';
+    if (isNaN(days_to_live) == false) {
+      const date = new Date();
+      const now = date.getTime();
+      if (days_to_live == 0) {
+        date.setTime(now);
+      } else {
+        date.setTime(now + (days_to_live * 24 * 60 * 60 * 1000));
+      }
+      expires = '; expires=' + date.toGMTString();
+    }
+
+    try {
+      document.cookie = encoded_key + '=' + encoded_value + expires + '; path=/';
+    } catch (e) {
+      if (!(e instanceof ReferenceError)) throw e;
+      return false
+    } finally {
+      return true;
+    }
+  }
+
+  /**
+   * Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
+   * @returns {*}
+   * @param {string|number} key - Name of key to look up value for.
+   */
+  _getCookieItem(key) {
+    const encoded_key = encodeURIComponent(key);
+    const cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
+    if (cookie_data === null || cookie_data[2] === 'undefined') return undefined;
+    return JSON.parse(decodeURIComponent(cookie_data[2]));
   }
 
   /**
@@ -109,16 +127,13 @@ class Browser_Storage {
    * @this Browser_Storage
    */
   getItem(key) {
-    const encoded_key = encodeURIComponent(key);
-    let decoded_value = undefined;
     if (this.supports_local_storage) {
+      const encoded_key = encodeURIComponent(key);
       const raw_value = localStorage.getItem(encoded_key);
-      if (raw_value === null) return undefined;
+      if (raw_value === null || raw_value === 'undefined') return undefined;
       return JSON.parse(decodeURIComponent(raw_value));
     } else if (this.supports_cookies) {
-      const cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
-      if (cookie_data === null) return undefined;
-      return JSON.parse(decodeURIComponent(cookie_data[2]));
+      return this._getCookieItem(key);
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
@@ -152,26 +167,14 @@ class Browser_Storage {
    * @this Browser_Storage
    */
   setItem(key, value, days_to_live = false) {
-    const encoded_key = encodeURIComponent(key);
-    const encoded_value = encodeURIComponent(JSON.stringify(value));
-
     if (this.supports_local_storage) {
-      localStorage.setItem(encoded_key, encoded_value);
+      localStorage.setItem(
+        encodeURIComponent(key),
+        encodeURIComponent(JSON.stringify(value))
+      );
       return true;
     } else if (this.supports_cookies) {
-      let expires = '';
-      if (days_to_live) {
-        const date = new Date();
-        if (days_to_live == 0) {
-          date.setTime(date.getTime());
-        } else {
-          date.setTime(date.getTime() + (days_to_live * 24 * 60 * 60 * 1000));
-        }
-        expires = '; expires=' + date.toGMTString();
-      }
-
-      document.cookie = encoded_key + '=' + encoded_value + expires + '; path=/';
-      return true;
+      return this._setCookieItem(key, value, days_to_live);
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
@@ -227,27 +230,24 @@ class Browser_Storage {
     if (this.supports_local_storage) {
       const keys = Object.keys(localStorage);
       for (let i = 0; i < keys.length; i++) {
-        const encoded_value = localStorage.getItem(keys[i]);
-        const decoded_key = decodeURIComponent(keys[i]);
-        if (encoded_value === null) {
-          console.warn('');
+        const encoded_key = keys[i];
+        const decoded_key = decodeURIComponent(encoded_key);
+        const raw_value = localStorage.getItem(encoded_key);
+        // Note, `JSON.pars()` has a _finicky appetite_
+        if (raw_value === null || raw_value === undefined || raw_value === 'undefined') {
           yield {key: decoded_key, value: undefined};
         } else {
-          yield {key: decoded_key, value: JSON.parse(decodeURIComponent(encoded_value))};
+          yield {key: decoded_key, value: JSON.parse(decodeURIComponent(raw_value))};
         }
       }
     } else if (this.supports_cookies) {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
-        const encoded_key = cookies[i].split('=')[0].trim();
-        const encoded_value = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
-        if (encoded_value === null) {
-          yield {key: decodeURIComponent(encoded_key), value: undefined};
-        } else {
-          yield {key: decodeURIComponent(encoded_key), value: JSON.parse(decodeURIComponent(encoded_value[2]))};
-        }
+        const decoded_key = decodeURIComponent(cookies[i].split('=')[0].trim());
+        yield {key: decoded_key, value: this._getCookieItem(decoded_key)};
       }
-    } else {
+    }
+    else {
       throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
     }
   }
@@ -269,3 +269,11 @@ class Browser_Storage {
  * https://javascript-utilities.github.io/browser-storage/
  */
 if (typeof(module) !== 'undefined') module.exports = Browser_Storage;
+
+
+/**
+ * @typedef stored_data
+ * @type {Object}
+ * @property {string|number|float} key   - `data.key` from `localStorage` or cookies
+ * @property {*}                   value - `data.value` from `localStorage` or cookies
+ */

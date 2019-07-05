@@ -33,6 +33,8 @@
 
 - [&#x1F5D2; Notes][notes]
 
+- [:card_index: Attribution][heading__attribution]
+
 - [:copyright: License][heading__license]
 
 
@@ -281,6 +283,41 @@ When `Browser_Storage` is using `localStorage` then _`set`'s_ `days_to_live` is 
 
 
 Opening **new** Issues is supper! However, to avoid attention fragmentation be certain to search for related Issues that could be added to instead. Developers please clone to a separate directory, then checkout the `gh-pages` branch which tracks the `master` branch as a submodule, and prior to issuing a Pull Request check the [Community][browser_storage__community] for any relevant updates.
+
+
+___
+
+
+## Attribution
+[heading__attribution]:
+  #attribution
+  "&#x1F4C7; Resources that where helpful in building this project so far."
+
+
+- StackOverflow
+
+  - [_`node.js - Creating instance of a class directly from require`_](https://stackoverflow.com/questions/33811062)
+  - [_`How to describe “object” arguments in jsdoc?`_](https://stackoverflow.com/questions/6460604)
+  - [_`What is the shortest function for reading a cookie by name in JavaScript?`_](https://stackoverflow.com/questions/5639346)
+  - [_`How to make an iterator out of an ES6 class`_](https://stackoverflow.com/questions/28739745)
+  - [_`JavaScript navigator.cookieEnabled Browser Compatibility`_](https://stackoverflow.com/questions/6125330/)
+
+- JestJS
+
+  - [_`Getting Started`_](https://jestjs.io/docs/en/getting-started)
+  - [_`expect(...)tothrowerror`_](https://jestjs.io/docs/en/expect#tothrowerror)
+
+- JSDoc
+
+  - [_`Getting Started`_](https://jsdoc.app/about-getting-started.html)
+
+- GitHub Gists
+
+  - [_`check-if-cookies-are-enabled.js`_](https://gist.github.com/steveosoule/5679949)
+
+- W3 Schools
+
+  - [_`JavaScript Cookies`_](https://www.w3schools.com/js/js_cookies.asp)
 
 
 ___
