@@ -2,10 +2,10 @@
   "name": "browser-storage",
   "version": "0.0.3",
   "description": "Tests for a client side JavaScript wrapper for localStorage and document.cookie interactions",
-  "main": "test-javascript/browser-storage.test.js",
+  "main": "echo 'Try npm test-c or npm test-s instead'; exit 1",
   "scripts": {
-    "test": "jest",
-    "test-c": "jest --coverage",
+    "test": "jest --coverage",
+    "test-c": "jest --coverage --watchAll",
     "test-w": "jest --watchAll",
     "test-s": "python3 -m http.server --bind 127.0.0.1 8080"
   },
@@ -14,7 +14,35 @@
     "testEnvironment": "jsdom",
     "roots": [
       ".ci-jest"
-    ]
+    ],
+    "collectCoverageFrom": [
+      ".ci-jest/*",
+      "assets/javascript/**"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      },
+      ".ci-jest/*": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 98.85
+      },
+      "assets/javascript/modules/browser-storage/**.js": {
+        "branches": 77.97,
+        "functions": 100,
+        "lines": 94.32,
+        "statements": 92.63
+      }
+    },
+    "coverageReporters": ["text"]
   },
   "repository": {
     "type": "git",
