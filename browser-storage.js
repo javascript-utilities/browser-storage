@@ -94,11 +94,11 @@ class Browser_Storage {
       } else {
         date.setTime(now + (days_to_live * 24 * 60 * 60 * 1000));
       }
-      expires = '; expires=' + date.toGMTString();
+      expires = `; expires=${date.toGMTString()}`;
     }
 
     try {
-      document.cookie = encoded_key + '=' + encoded_value + expires + '; path=/';
+      document.cookie = `${encoded_key}=${encoded_value}${expires}; path=/`;
     } catch (e) {
       if (!(e instanceof ReferenceError)) throw e;
       return false
@@ -113,7 +113,7 @@ class Browser_Storage {
    */
   _getCookieItem(key) {
     const encoded_key = encodeURIComponent(key);
-    const cookie_data = document.cookie.match('(^|;) ?' + encoded_key + '=([^;]*)(;|$)');
+    const cookie_data = document.cookie.match(`(^|;) ?${encoded_key}=([^;]*)(;|$)`);
     if (cookie_data === null || cookie_data[2] === 'undefined') return undefined;
     return JSON.parse(decodeURIComponent(cookie_data[2]));
   }
@@ -194,6 +194,25 @@ class Browser_Storage {
         cookie_keys.push(pare.split('=')[0].trim());
       });
       return cookie_keys;
+    }
+
+    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+  }
+
+  /**
+   * Gets key name by index address
+   * @returns {string|number}
+   * @throws {ReferenceError} When no browser based storage is available
+   * @param {number} index - Key name to return by index
+   * @this Browser_Storage
+   */
+  key(index) {
+    if (this.supports_local_storage) {
+      return localStorage.key(index);
+    } else if (this.supports_cookies) {
+      const encoded_value = document.cookie.split(';')[index].split('=')[0].trimStart();
+      if (encoded_value == undefined) return undefined;
+      return decodeURIComponent(encoded_value);
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
