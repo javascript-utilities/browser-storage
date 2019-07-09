@@ -102,6 +102,10 @@ class Browser_Storage_Test {
         expect(this.storage.keys()).not.toContain('Casper');
       }
     });
+
+    test('Can we get key by index?', () => {
+      expect(this.storage.key(0)).toBeDefined();
+    });
   }
 
   /**
@@ -146,6 +150,12 @@ class Browser_Storage_Test {
       const storage_iter = this.storage.iterator();
       expect(() => {
         storage_iter.next().value;
+      }).toThrow(ReferenceError);
+    });
+
+    test('Will `key(0)` throw a `ReferenceError` without storage support?', () => {
+      expect(() => {
+        this.storage.key(0);
       }).toThrow(ReferenceError);
     });
   }

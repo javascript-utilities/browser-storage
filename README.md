@@ -175,11 +175,7 @@ npm install --save-dev
 
 
 ```Bash
-npm test
-
-## Or to have Jest watch for changes to tests...
-
-npm run test-w
+npm run ci-tests
 ```
 
 
@@ -187,7 +183,7 @@ npm run test-w
 
 
 ```Bash
-npm run test-c
+npm run cover
 ```
 
 
@@ -195,7 +191,7 @@ npm run test-c
 
 
 ```Bash
-npm run test-s
+npm run server
 ```
 
 

@@ -1,7 +1,3 @@
-
-> browser-storage@0.0.3 build-api-docs /home/s0ands0/Git/hub/javascript-utilities/browser-storage
-> jsdoc2md
-
 ## Classes
 
 <dl>
@@ -12,7 +8,7 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#stored_data-codeobjectcode">`stored_data`</a> : <code>Object</code></dt>
+<dt><a href="#stored_data--object">`stored_data`</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
 
@@ -33,18 +29,19 @@
 * [Browser_Storage](#Browser_Storage)
     * [`new Browser_Storage()`](#new-browser_storage)
     * _instance_
-        * [`.constructorRefresh()`](#browser_storageconstructorrefresh-codenonecode) ⇒ <code>none</code>
-        * [`.supportsCookies()`](#browser_storagesupportscookies-codebooleancode) ⇒ <code>boolean</code>
-        * [`._setCookieItem(key, value, [days_to_live])`](#browser_storage_setcookieitemkey-value-days_to_live-codebooleancode) ⇒ <code>boolean</code>
-        * [`._getCookieItem(key)`](#browser_storage_getcookieitemkey-codecode) ⇒ <code>\*</code>
-        * [`.getItem(key)`](#browser_storagegetitemkey-codecode) ⇒ <code>\*</code>
-        * [`.removeItem()`](#browser_storageremoveitem-codebooleancode) ⇒ <code>boolean</code>
-        * [`.setItem(key, value, [days_to_live])`](#browser_storagesetitemkey-value-days_to_live-codebooleancode) ⇒ <code>boolean</code>
-        * [`.keys()`](#browser_storagekeys-codebooleancode) ⇒ <code>boolean</code>
-        * [`.clear()`](#browser_storageclear-codebooleancode) ⇒ <code>boolean</code>
+        * [`.constructorRefresh()`](#browser_storageconstructorrefresh--none) ⇒ <code>none</code>
+        * [`.supportsCookies()`](#browser_storagesupportscookies--boolean) ⇒ <code>boolean</code>
+        * [`._setCookieItem(key, value, [days_to_live])`](#browser_storage_setcookieitemkey-value-days_to_live--boolean) ⇒ <code>boolean</code>
+        * [`._getCookieItem(key)`](#browser_storage_getcookieitemkey--) ⇒ <code>\*</code>
+        * [`.getItem(key)`](#browser_storagegetitemkey--) ⇒ <code>\*</code>
+        * [`.removeItem()`](#browser_storageremoveitem--boolean) ⇒ <code>boolean</code>
+        * [`.setItem(key, value, [days_to_live])`](#browser_storagesetitemkey-value-days_to_live--boolean) ⇒ <code>boolean</code>
+        * [`.keys()`](#browser_storagekeys--boolean) ⇒ <code>boolean</code>
+        * [`.key(index)`](#browser_storagekeyindex--stringnumber) ⇒ <code>string</code> \| <code>number</code>
+        * [`.clear()`](#browser_storageclear--boolean) ⇒ <code>boolean</code>
         * [`.iterator()`](#browser_storageiterator)
     * _static_
-        * [`.supportsLocalStorage()`](#browser_storagesupportslocalstorage-codebooleancode) ⇒ <code>boolean</code>
+        * [`.supportsLocalStorage()`](#browser_storagesupportslocalstorage--boolean) ⇒ <code>boolean</code>
 
 ### `new Browser\_Storage()`
 Sets properties used by other methods of this class
@@ -81,9 +78,12 @@ Use `this.setItem` instead. Attempts to set cookie
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| key | <code>string</code> \| <code>number</code> |  | _variable name_ to store value under |
-| value | <code>\*</code> |  | stored either under localStorage or as a cookie |
-| [days_to_live] | <code>number</code> | <code>false</code> | how long a browser is suggested to keep cookies |
+| key | <code>string</code> \| <code>number</code> | 
+ | _variable name_ to store value under |
+| value | <code>\*</code> | 
+ | stored either under localStorage or as a cookie |
+| [days_to_live] | <code>number</code> | <code>false</code>
+ | how long a browser is suggested to keep cookies |
 
 ### `browser_Storage.\_getCookieItem(key)` ⇒ <code>\*</code>
 Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
@@ -129,9 +129,12 @@ Stores encoded JSON within browser
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| key | <code>string</code> \| <code>number</code> |  | _variable name_ to store value under |
-| value | <code>\*</code> |  | stored either under localStorage or as a cookie |
-| [days_to_live] | <code>number</code> | <code>false</code> | how long a browser is suggested to keep cookies |
+| key | <code>string</code> \| <code>number</code> | 
+ | _variable name_ to store value under |
+| value | <code>\*</code> | 
+ | stored either under localStorage or as a cookie |
+| [days_to_live] | <code>number</code> | <code>false</code>
+ | how long a browser is suggested to keep cookies |
 
 ### `browser_Storage.keys()` ⇒ <code>boolean</code>
 Lists keys that may point to values
@@ -142,6 +145,20 @@ Lists keys that may point to values
 - <code>ReferenceError</code> When no browser based storage is available
 
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+### `browser_Storage.key(index)` ⇒ <code>string</code> \| <code>number</code>
+Gets key name by index address
+
+**Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
+**Throws**:
+
+- <code>ReferenceError</code> When no browser based storage is available
+
+**this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| index | <code>number</code> | Key name to return by index |
+
 ### `browser_Storage.clear()` ⇒ <code>boolean</code>
 Clears **all** stored values from either localStorage or cookies
 

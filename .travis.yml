@@ -59,4 +59,4 @@ before_install:
 install:
   - npm ci
 script:
-  - npm test
+  - npm run ci-test

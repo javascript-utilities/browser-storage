@@ -3,11 +3,12 @@
   "version": "0.0.3",
   "description": "Tests for a client side JavaScript wrapper for localStorage and document.cookie interactions",
   "main": "echo 'Try npm test-c or npm test-s instead'; exit 1",
+  "loglevel": "error",
   "scripts": {
-    "test": "jest --coverage",
-    "test-c": "jest --coverage --watchAll",
-    "test-w": "jest --watchAll",
-    "test-s": "python3 -m http.server --bind 127.0.0.1 8080"
+    "build-api-docs": "jsdoc2md",
+    "ci-test": "jest --coverage",
+    "cover": "jest --coverage --watchAll",
+    "server": "python3 -m http.server --bind 127.0.0.1 8080"
   },
   "jest": {
     "verbose": true,
@@ -24,25 +25,35 @@
     ],
     "coverageThreshold": {
       "global": {
+        "statements": 100,
         "branches": 100,
         "functions": 100,
-        "lines": 100,
-        "statements": 100
+        "lines": 100
       },
       ".ci-jest/*": {
+        "statements": 98.85,
         "branches": 100,
         "functions": 100,
-        "lines": 100,
-        "statements": 98.85
+        "lines": 100
       },
       "assets/javascript/modules/browser-storage/**.js": {
+        "statements": 92.23,
         "branches": 77.97,
         "functions": 100,
-        "lines": 94.32,
-        "statements": 92.63
+        "lines": 94.32
       }
     },
-    "coverageReporters": ["text"]
+    "coverageReporters": [
+      "text"
+    ]
+  },
+  "jsdoc2md": {
+    "files": [
+      "assets/javascript/modules/browser-storage/*.js"
+    ],
+    "name-format": "backticks",
+    "no-gfm": false,
+    "id-headings": true
   },
   "repository": {
     "type": "git",
@@ -61,6 +72,8 @@
   },
   "homepage": "https://github.com/javascript-utilities/browser-storage",
   "devDependencies": {
-    "jest": "^24.8.0"
-  }
+    "jest": "^24.8.0",
+    "jsdoc-to-markdown": "^5.0.0"
+  },
+  "dependencies": {}
 }
