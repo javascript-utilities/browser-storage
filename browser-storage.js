@@ -78,7 +78,7 @@ class Browser_Storage {
    * Use `this.setItem` instead. Attempts to set cookie
    * @returns {boolean}
    * @param {string|number}           key - _variable name_ to store value under
-   * @param {*}                     value - stored either under localStorage or as a cookie
+   * @param {JSON|Object}           value - stored either under localStorage or as a cookie
    * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
    */
   _setCookieItem(key, value, days_to_live = false) {
@@ -108,7 +108,7 @@ class Browser_Storage {
 
   /**
    * Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
-   * @returns {*}
+   * @returns {JSON|Object}
    * @param {string|number} key - Name of key to look up value for.
    */
   _getCookieItem(key) {
@@ -120,7 +120,7 @@ class Browser_Storage {
 
   /**
    * Gets decoded/JSON value for given key
-   * @returns {*}
+   * @returns {JSON|Object}
    * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number} key - Name of key to look up value for.
    * @this Browser_Storage
@@ -141,7 +141,6 @@ class Browser_Storage {
   /**
    * Removes value by key from browser storage; cookies require page refresh
    * @returns {boolean}
-   * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
   removeItem(key) {
@@ -153,13 +152,12 @@ class Browser_Storage {
       // to remove one cookie upon the next page load.
       return this.setItem(key, '', -7);
     }
-    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+    return false;
   }
 
   /**
    * Stores encoded JSON within browser
    * @returns {boolean}
-   * @throws {ReferenceError} When no browser based storage is available
    * @param {string|number}           key - _variable name_ to store value under
    * @param {*}                     value - stored either under localStorage or as a cookie
    * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
@@ -175,13 +173,12 @@ class Browser_Storage {
     } else if (this.supports_cookies) {
       return this._setCookieItem(key, value, days_to_live);
     }
-
-    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+    return false;
   }
 
   /**
    * Lists keys that may point to values
-   * @returns {boolean}
+   * @returns {Array}
    * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
@@ -221,7 +218,6 @@ class Browser_Storage {
   /**
    * Clears **all** stored values from either localStorage or cookies
    * @returns {boolean}
-   * @throws {ReferenceError} When no browser based storage is available
    * @this Browser_Storage
    */
   clear() {
@@ -235,8 +231,7 @@ class Browser_Storage {
       });
       return true;
     }
-
-    throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
+    return false;
   }
 
   /**

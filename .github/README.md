@@ -9,7 +9,7 @@
 
 > Check the [`gh-pages` branch][browser_storage__gh_pages] for source files of [live demo][demo__browser_storage] hosted by GitHub Pages, development tips for your first Pull Request, and Continuous Integration configurations for automated tests.
 >
-> The following covers how to install this branch as a submodule within your own project, notes for private hosting, and methods that `Browser_Storage.js` currently has defined.
+> The following covers how to install this branch as a submodule within your own project, notes for private hosting, and methods that `Browser_Storage.js` currently has defined as of late <sub>![Commits since v0.0.3](https://img.shields.io/github/commits-since/javascript-utilities/browser-storage/v0.0.3/master.svg)</sub>.
 
 
 ## [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Latest commits][badge__commits__browser_storage__master]][commits__browser_storage__master] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage]
@@ -420,10 +420,9 @@ on
   "&#x1F3D7; Pull Request friendly, though please check the Community guidelines"
 
 
-
 [badge__master__browser_storage__source_code]:
   https://img.shields.io/github/size/javascript-utilities/browser-storage/browser-storage.js.svg?label=Browser_Storage.js
 
 [browser_storage__master__source_code]:
   https://github.com/javascript-utilities/browser-storage/blob/master/browser-storage.js
-  "&#x2328; Project source, one JavaScript file with ~108 lines of actionable code!"
+  "&#x2328; Project source, one JavaScript file with ~142 lines of actionable code!"
