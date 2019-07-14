@@ -116,10 +116,8 @@ class Browser_Storage_Test {
   errorThrowers() {
     this.forceStorageState({supports_local_storage: false, supports_cookies: false});
 
-    test('Will `setItem()` throw a `ReferenceError` without storage support?', () => {
-      expect(() => {
-        this.storage.setItem('test__boolean', true, 3);
-      }).toThrow(ReferenceError);
+    test('Will `setItem()` return `false` without storage support?', () => {
+      expect(this.storage.setItem('test__boolean', true, 3)).toBe(false);
     });
 
     test('Will `getItem()` throw a `ReferenceError` without storage support?', () => {
@@ -128,16 +126,12 @@ class Browser_Storage_Test {
       }).toThrow(ReferenceError);
     });
 
-    test('Will `removeItem()` throw a `ReferenceError` without storage support?', () => {
-      expect(() => {
-        this.storage.removeItem('Anything?');
-      }).toThrow(ReferenceError);
+    test('Will `removeItem()` return `false` without storage support?', () => {
+      expect(this.storage.removeItem('Anything?')).toBe(false);
     });
 
-    test('Will `clear()` throw a `ReferenceError` without storage support?', () => {
-      expect(() => {
-        this.storage.clear();
-      }).toThrow(ReferenceError);
+    test('Will `clear()` return `false` without storage support?', () => {
+      expect(this.storage.clear()).toBe(false);
     });
 
     test('Will `keys()` throw a `ReferenceError` without storage support?', () => {

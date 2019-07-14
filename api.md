@@ -12,6 +12,7 @@
 <dd></dd>
 </dl>
 
+
 ## Browser\_Storage
 **Kind**: global class  
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
@@ -32,16 +33,17 @@
         * [`.constructorRefresh()`](#browser_storageconstructorrefresh--none) ⇒ <code>none</code>
         * [`.supportsCookies()`](#browser_storagesupportscookies--boolean) ⇒ <code>boolean</code>
         * [`._setCookieItem(key, value, [days_to_live])`](#browser_storage_setcookieitemkey-value-days_to_live--boolean) ⇒ <code>boolean</code>
-        * [`._getCookieItem(key)`](#browser_storage_getcookieitemkey--) ⇒ <code>\*</code>
-        * [`.getItem(key)`](#browser_storagegetitemkey--) ⇒ <code>\*</code>
+        * [`._getCookieItem(key)`](#browser_storage_getcookieitemkey--json--object) ⇒ <code>JSON</code> \| <code>Object</code>
+        * [`.getItem(key)`](#browser_storagegetitemkey--json--object) ⇒ <code>JSON</code> \| <code>Object</code>
         * [`.removeItem()`](#browser_storageremoveitem--boolean) ⇒ <code>boolean</code>
         * [`.setItem(key, value, [days_to_live])`](#browser_storagesetitemkey-value-days_to_live--boolean) ⇒ <code>boolean</code>
-        * [`.keys()`](#browser_storagekeys--boolean) ⇒ <code>boolean</code>
-        * [`.key(index)`](#browser_storagekeyindex--stringnumber) ⇒ <code>string</code> \| <code>number</code>
+        * [`.keys()`](#browser_storagekeys--array) ⇒ <code>Array</code>
+        * [`.key(index)`](#browser_storagekeyindex--string--number) ⇒ <code>string</code> \| <code>number</code>
         * [`.clear()`](#browser_storageclear--boolean) ⇒ <code>boolean</code>
         * [`.iterator()`](#browser_storageiterator)
     * _static_
         * [`.supportsLocalStorage()`](#browser_storagesupportslocalstorage--boolean) ⇒ <code>boolean</code>
+
 
 ### `new Browser\_Storage()`
 Sets properties used by other methods of this class
@@ -61,16 +63,19 @@ if (!storage.storage_available) {
   console.log("storage.getItem('test__string') -> " + storage.getItem('test__string'));
 }
 ```
+
 ### `browser_Storage.constructorRefresh()` ⇒ <code>none</code>
 Copy of `this.constructor` that should not throw `TypeError` when called
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `browser_Storage.supportsCookies()` ⇒ <code>boolean</code>
 Reports if cookies are enabled. Note, use `this.supports_cookies` instead within tests.
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `browser_Storage.\_setCookieItem(key, value, [days_to_live])` ⇒ <code>boolean</code>
 Use `this.setItem` instead. Attempts to set cookie
 
@@ -80,12 +85,13 @@ Use `this.setItem` instead. Attempts to set cookie
 | --- | --- | --- | --- |
 | key | <code>string</code> \| <code>number</code> | 
  | _variable name_ to store value under |
-| value | <code>\*</code> | 
+| value | <code>JSON</code> \| <code>Object</code> | 
  | stored either under localStorage or as a cookie |
 | [days_to_live] | <code>number</code> | <code>false</code>
  | how long a browser is suggested to keep cookies |
 
-### `browser_Storage.\_getCookieItem(key)` ⇒ <code>\*</code>
+
+### `browser_Storage.\_getCookieItem(key)` ⇒ <code>JSON</code> \| <code>Object</code>
 Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
@@ -94,7 +100,8 @@ Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
 | --- | --- | --- |
 | key | <code>string</code> \| <code>number</code> | Name of key to look up value for. |
 
-### `browser_Storage.getItem(key)` ⇒ <code>\*</code>
+
+### `browser_Storage.getItem(key)` ⇒ <code>JSON</code> \| <code>Object</code>
 Gets decoded/JSON value for given key
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
@@ -108,23 +115,17 @@ Gets decoded/JSON value for given key
 | --- | --- | --- |
 | key | <code>string</code> \| <code>number</code> | Name of key to look up value for. |
 
+
 ### `browser_Storage.removeItem()` ⇒ <code>boolean</code>
 Removes value by key from browser storage; cookies require page refresh
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
-**Throws**:
-
-- <code>ReferenceError</code> When no browser based storage is available
-
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `browser_Storage.setItem(key, value, [days_to_live])` ⇒ <code>boolean</code>
 Stores encoded JSON within browser
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
-**Throws**:
-
-- <code>ReferenceError</code> When no browser based storage is available
-
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
 
 | Param | Type | Default | Description |
@@ -136,7 +137,8 @@ Stores encoded JSON within browser
 | [days_to_live] | <code>number</code> | <code>false</code>
  | how long a browser is suggested to keep cookies |
 
-### `browser_Storage.keys()` ⇒ <code>boolean</code>
+
+### `browser_Storage.keys()` ⇒ <code>Array</code>
 Lists keys that may point to values
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
@@ -145,6 +147,7 @@ Lists keys that may point to values
 - <code>ReferenceError</code> When no browser based storage is available
 
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `browser_Storage.key(index)` ⇒ <code>string</code> \| <code>number</code>
 Gets key name by index address
 
@@ -159,24 +162,24 @@ Gets key name by index address
 | --- | --- | --- |
 | index | <code>number</code> | Key name to return by index |
 
+
 ### `browser_Storage.clear()` ⇒ <code>boolean</code>
 Clears **all** stored values from either localStorage or cookies
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
-**Throws**:
-
-- <code>ReferenceError</code> When no browser based storage is available
-
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `browser_Storage.iterator()`
 Generates `{data.key: data.value}` JSON from localStorage or cookies
 
 **Kind**: instance method of [<code>Browser\_Storage</code>](#Browser_Storage)  
 **this**: [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ### `Browser_Storage.supportsLocalStorage()` ⇒ <code>boolean</code>
 Tests and reports `boolean` if `localStorage` has `setItem` and `removeItem` methods
 
 **Kind**: static method of [<code>Browser\_Storage</code>](#Browser_Storage)  
+
 ## `stored\_data` : <code>Object</code>
 **Kind**: global typedef  
 **Properties**

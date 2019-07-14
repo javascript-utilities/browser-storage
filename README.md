@@ -9,10 +9,10 @@
 
 > See the [`master` branch][browser_storage__master] for _Quick Start_ on installing and utilizing _`Browser_Storage.js`_. This branch contains development, testing, and source files of the [live demo][demo__browser_storage] for this project.
 >
-> The following are quick tips on setting up to develop, test, and improve this project. Please review _`Contributing`_ within [Community][browser_storage__community] prior to issuing first Pull Request.
+> The following are quick tips on setting up to develop, test, and improve this project as of latest <sub>![commits since d0.0.3](https://img.shields.io/github/commits-since/javascript-utilities/browser-storage/d0.0.3/gh-pages.svg)</sub>. Please review _`Contributing`_ within [Community][browser_storage__community] prior to issuing first Pull Request.
 
 
-## [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Built Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Latest commits][badge__commits__browser_storage__gh_pages]][commits__browser_storage__gh_pages] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage]
+## [![Byte size of Browser_Storage.js][badge__master__browser_storage__source_code]][browser_storage__master__source_code] [![Open Issues][badge__issues__browser_storage]][issues__browser_storage] [![Open Pull Requests][badge__pull_requests__browser_storage]][pull_requests__browser_storage] [![DeepScan Grade][badge__deepscan__browser_storage]][deepscan__browser_storage] [![Build Test Status][badge__travis_ci__browser_storage]][travis_ci__browser_storage] [![Latest commits][badge__commits__browser_storage__gh_pages]][commits__browser_storage__gh_pages] [![Browser_Storage Demo][badge__demo__browser_storage]][demo__browser_storage]
 
 
 ------
@@ -361,4 +361,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 [browser_storage__master__source_code]:
   https://github.com/javascript-utilities/browser-storage/blob/master/browser-storage.js
-  "&#x2328; Project source, one JavaScript file with ~108 lines of actionable code!"
+  "&#x2328; Project source, one JavaScript file with ~142 lines of actionable code!"
