@@ -1,3 +1,4 @@
+//@ts-check
 /**
  * @author S0AndS0
  * @copyright AGPL-3.0
@@ -18,7 +19,6 @@
 class Browser_Storage {
   /**
    * Sets properties used by other methods of this class
-   * @returns {none}
    * @property {boolean} supports_local_storage - What `this.constructor.supportsLocalStorage()` had to say
    * @property {boolean} supports_cookies       - What `this.supportsCookies()` had to say
    * @property {boolean} storage_available      - If either of the above is `true`
@@ -33,7 +33,6 @@ class Browser_Storage {
 
   /**
    * Copy of `this.constructor` that should not throw `TypeError` when called
-   * @returns {none}
    * @this Browser_Storage
    */
   constructorRefresh() {
@@ -50,7 +49,7 @@ class Browser_Storage {
     // Because Opera and may be other browsers `setItem`
     // is available but with space set to _`0`_
     try {
-      localStorage.setItem('test_key', true);
+      localStorage.setItem('test_key', 'true');
     } catch (e) {
       if (!(e instanceof ReferenceError)) throw e;
       return false;
@@ -79,7 +78,7 @@ class Browser_Storage {
    * @returns {boolean}
    * @param {string|number}           key - _variable name_ to store value under
    * @param {JSON|Object}           value - stored either under localStorage or as a cookie
-   * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
+   * @param {number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
    */
   _setCookieItem(key, value, days_to_live = false) {
     const encoded_key = encodeURIComponent(key);
@@ -159,7 +158,7 @@ class Browser_Storage {
    * Stores encoded JSON within browser
    * @returns {boolean}
    * @param {string|number}           key - _variable name_ to store value under
-   * @param {*}                     value - stored either under localStorage or as a cookie
+   * @param {any}                     value - stored either under localStorage or as a cookie
    * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
    * @this Browser_Storage
    */
