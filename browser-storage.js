@@ -26,8 +26,8 @@ class Browser_Storage {
    * @class
    */
   constructor() {
-    this.supports_local_storage = this.constructor.supportsLocalStorage();
-    this.supports_cookies = this.supportsCookies();
+    this.supports_local_storage = Browser_Storage.supportsLocalStorage();
+    this.supports_cookies = Browser_Storage.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
@@ -36,8 +36,8 @@ class Browser_Storage {
    * @this Browser_Storage
    */
   constructorRefresh() {
-    this.supports_local_storage = this.constructor.supportsLocalStorage();
-    this.supports_cookies = this.supportsCookies();
+    this.supports_local_storage = Browser_Storage.supportsLocalStorage();
+    this.supports_cookies = Browser_Storage.supportsCookies();
     this.storage_available = (this.supports_cookies || this.supports_local_storage) ? true : false;
   }
 
@@ -64,11 +64,11 @@ class Browser_Storage {
    * @returns {boolean}
    * @this Browser_Storage
    */
-  supportsCookies() {
+  static supportsCookies() {
     // Browser support detection must be interactive as some
     // may be _full_ or not enabled without updating state!
-    if (this._setCookieItem('testcookie', '', 7)) {
-      return this._setCookieItem('testcookie', '', -7);
+    if (Browser_Storage._setCookieItem('testcookie', '', 7)) {
+      return Browser_Storage._setCookieItem('testcookie', '', -7);
     }
     return false;
   }
@@ -76,11 +76,11 @@ class Browser_Storage {
   /**
    * Use `this.setItem` instead. Attempts to set cookie
    * @returns {boolean}
-   * @param {string|number}           key - _variable name_ to store value under
+   * @param {Object|string|number}           key - _variable name_ to store value under
    * @param {JSON|Object}           value - stored either under localStorage or as a cookie
-   * @param {number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
+   * @param {Object|number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
    */
-  _setCookieItem(key, value, days_to_live = false) {
+  static _setCookieItem(key, value, days_to_live = false) {
     const encoded_key = encodeURIComponent(key);
     const encoded_value = encodeURIComponent(JSON.stringify(value));
 
@@ -93,14 +93,14 @@ class Browser_Storage {
       } else {
         date.setTime(now + (days_to_live * 24 * 60 * 60 * 1000));
       }
-      expires = `; expires=${date.toGMTString()}`;
+      expires = `; expires=${date.toUTCString()}`;
     }
 
     try {
       document.cookie = `${encoded_key}=${encoded_value}${expires}; path=/`;
     } catch (e) {
       if (!(e instanceof ReferenceError)) throw e;
-      return false
+      return false;
     }
     return true;
   }
@@ -108,9 +108,9 @@ class Browser_Storage {
   /**
    * Use `this.getItem` instead. Attempts to get cookie by _key_ via `match`
    * @returns {JSON|Object}
-   * @param {string|number} key - Name of key to look up value for.
+   * @param {Object|string|number} key - Name of key to look up value for.
    */
-  _getCookieItem(key) {
+  static _getCookieItem(key) {
     const encoded_key = encodeURIComponent(key);
     const cookie_data = document.cookie.match(`(^|;) ?${encoded_key}=([^;]*)(;|$)`);
     if (cookie_data === null || cookie_data[2] === 'undefined') return undefined;
@@ -121,7 +121,7 @@ class Browser_Storage {
    * Gets decoded/JSON value for given key
    * @returns {JSON|Object}
    * @throws {ReferenceError} When no browser based storage is available
-   * @param {string|number} key - Name of key to look up value for.
+   * @param {Object|string|number} key - Name of key to look up value for.
    * @this Browser_Storage
    */
   getItem(key) {
@@ -131,7 +131,7 @@ class Browser_Storage {
       if (raw_value === null || raw_value === 'undefined') return undefined;
       return JSON.parse(decodeURIComponent(raw_value));
     } else if (this.supports_cookies) {
-      return this._getCookieItem(key);
+      return Browser_Storage._getCookieItem(key);
     }
 
     throw new ReferenceError('Browser storage unavailable as of last constructorRefresh()');
@@ -157,9 +157,9 @@ class Browser_Storage {
   /**
    * Stores encoded JSON within browser
    * @returns {boolean}
-   * @param {string|number}           key - _variable name_ to store value under
+   * @param {Object|string|number}           key - _variable name_ to store value under
    * @param {any}                     value - stored either under localStorage or as a cookie
-   * @param {number} [days_to_live=false] - how long a browser is suggested to keep cookies
+   * @param {number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
    * @this Browser_Storage
    */
   setItem(key, value, days_to_live = false) {
@@ -170,7 +170,7 @@ class Browser_Storage {
       );
       return true;
     } else if (this.supports_cookies) {
-      return this._setCookieItem(key, value, days_to_live);
+      return Browser_Storage._setCookieItem(key, value, days_to_live);
     }
     return false;
   }
@@ -206,6 +206,7 @@ class Browser_Storage {
     if (this.supports_local_storage) {
       return localStorage.key(index);
     } else if (this.supports_cookies) {
+      // @ts-ignore
       const encoded_value = document.cookie.split(';')[index].split('=')[0].trimStart();
       if (encoded_value == undefined) return undefined;
       return decodeURIComponent(encoded_value);
@@ -256,7 +257,7 @@ class Browser_Storage {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
         const decoded_key = decodeURIComponent(cookies[i].split('=')[0].trim());
-        yield {key: decoded_key, value: this._getCookieItem(decoded_key)};
+        yield {key: decoded_key, value: Browser_Storage._getCookieItem(decoded_key)};
       }
     }
     else {
@@ -269,7 +270,9 @@ class Browser_Storage {
    * @returns {stored_data}
    * @this Browser_Storage
    */
+  // @ts-ignore
   [Symbol.iterator]() {
+    // @ts-ignore
     return this.iterator();
   }
 
