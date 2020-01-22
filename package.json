@@ -31,16 +31,16 @@
         "lines": 100
       },
       ".ci-jest/*": {
-        "statements": 98.85,
+        "statements": 100,
         "branches": 100,
         "functions": 100,
         "lines": 100
       },
       "assets/javascript/modules/browser-storage/**.js": {
         "statements": 92.23,
-        "branches": 77.97,
+        "branches": 78.46,
         "functions": 100,
-        "lines": 94.32
+        "lines": 94.74
       }
     },
     "coverageReporters": [

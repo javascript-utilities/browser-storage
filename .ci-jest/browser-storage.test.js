@@ -183,7 +183,7 @@ class Browser_Storage_Test {
    */
   resetsAndWipes() {
     test('Do supportsCookies and supportsLocalStorage return boolean', () => {
-      expect(this.storage.supportsCookies()).toBe(true);
+      expect(this.storage.constructor.supportsCookies()).toBe(true);
       expect(this.storage.constructor.supportsLocalStorage()).toBe(true);
     });
 
