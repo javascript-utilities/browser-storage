@@ -191,7 +191,7 @@ npm run cover
 
 
 ```Bash
-npm run server
+npm run py-server
 ```
 
 
