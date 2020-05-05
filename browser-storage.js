@@ -42,6 +42,78 @@ class Browser_Storage {
   }
 
   /**
+   * Coerces values into JavaScript object types
+   * @function coerce
+   * @param {any} value
+   * @returns {any}
+   * @throws {!SyntaxError}
+   * @example
+   * coerce('1');
+   * //> 1
+   *
+   * coerce('stringy');
+   * //> "stringy"
+   *
+   * coerce('{"key": "value"}');
+   * //> {key: "value"}
+   */
+  static coerce(value) {
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      if (!(e instanceof SyntaxError)) {
+        throw e;
+      }
+
+      // @ts-ignore
+      if (['undefined', undefined].includes(value)) {
+        return undefined;
+      } else {
+        return value;
+      }
+    }
+  };
+
+  /**
+   * Translates `document.cookie` key value strings into dictionary
+   * @param {boolean?} [coerce_values=false] - When `true` will coerce value types
+   * @returns {Object<string, string>|Object<string, any>}
+   */
+  static getObjectifiedCookies(coerce_values = false) {
+    return document.cookie.split(';').reduce((accumulator, data) => {
+      const key_value = data.split('=');
+      const key = key_value[0].trim();
+
+      let value = decodeURIComponent(key_value[1].trim());
+      if (coerce_values === true) {
+        value = Browser_Storage.coerce(value);
+      }
+      accumulator[key] = value;
+
+      return accumulator;
+    }, {});
+  };
+
+  /**
+   * Translates `localStora` key value strings into dictionary
+   * @param {boolean?} [coerce_values=false] - When `true` will coerce value types
+   * @returns {Object<string, string>|Object<string, any>}
+   // * @this Browser_Storage
+   */
+  static getObjectifiedLocalStorage(coerce_values = false) {
+    return Object.keys(localStorage).reduce((accumulator, encoded_key) => {
+
+      let value = decodeURIComponent(localStorage.getItem(encoded_key));
+      if (coerce_values === true) {
+        value = Browser_Storage.coerce(value);
+      }
+      accumulator[decodeURIComponent(encoded_key)] = value;
+
+      return accumulator;
+    }, {});
+  }
+
+  /**
    * Tests and reports `boolean` if `localStorage` has `setItem` and `removeItem` methods
    * @returns {boolean}
    */
@@ -115,6 +187,7 @@ class Browser_Storage {
     const cookie_data = document.cookie.match(`(^|;) ?${encoded_key}=([^;]*)(;|$)`);
     if (cookie_data === null || cookie_data[2] === 'undefined') return undefined;
     return JSON.parse(decodeURIComponent(cookie_data[2]));
+    // return Browser_Storage.coerce(decodeURIComponent(cookie_data[2]));
   }
 
   /**
@@ -130,6 +203,7 @@ class Browser_Storage {
       const raw_value = localStorage.getItem(encoded_key);
       if (raw_value === null || raw_value === 'undefined') return undefined;
       return JSON.parse(decodeURIComponent(raw_value));
+      // return Browser_Storage.coerce(decodeURIComponent(raw_value));
     } else if (this.supports_cookies) {
       return Browser_Storage._getCookieItem(key);
     }
