@@ -148,7 +148,7 @@ class Browser_Storage {
   /**
    * Use `this.setItem` instead. Attempts to set cookie
    * @returns {boolean}
-   * @param {Object|string|number}           key - _variable name_ to store value under
+   * @param {Object|string|number}  key - _variable name_ to store value under
    * @param {JSON|Object}           value - stored either under localStorage or as a cookie
    * @param {Object|number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
    */
@@ -231,8 +231,8 @@ class Browser_Storage {
   /**
    * Stores encoded JSON within browser
    * @returns {boolean}
-   * @param {Object|string|number}           key - _variable name_ to store value under
-   * @param {any}                     value - stored either under localStorage or as a cookie
+   * @param {Object|string|number} key - _variable name_ to store value under
+   * @param {any}                  value - stored either under localStorage or as a cookie
    * @param {number|boolean} [days_to_live=false] - how long a browser is suggested to keep cookies
    * @this Browser_Storage
    */
