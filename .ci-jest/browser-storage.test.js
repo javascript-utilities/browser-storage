@@ -225,6 +225,7 @@ class Browser_Storage_Test {
 
       expect(this.storage.constructor.coerce('true')).toBe(true);
       expect(this.storage.constructor.coerce('false')).toBe(false);
+      expect(this.storage.constructor.coerce('NaN')).toBe(NaN);
       expect(this.storage.constructor.coerce(test_json)).toStrictEqual(test_object);
     });
   }
