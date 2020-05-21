@@ -68,6 +68,9 @@ class Browser_Storage {
       // @ts-ignore
       if (['undefined', undefined].includes(value)) {
         return undefined;
+      // @ts-ignore
+      } else if (['NaN', NaN].includes(value)) {
+        return NaN;
       } else {
         return value;
       }
