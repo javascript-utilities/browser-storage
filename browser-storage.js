@@ -69,14 +69,14 @@ class Browser_Storage {
       // @ts-ignore
       if (['undefined', undefined].includes(value)) {
         return undefined;
-      // @ts-ignore
-      } else if (['NaN', NaN].includes(value)) {
-        return NaN;
-      } else {
-        return value;
       }
+      // @ts-ignore
+      else if (['NaN', NaN].includes(value)) {
+        return NaN;
+      }
+      return value;
     }
-  };
+  }
 
   /**
    * Translates `document.cookie` key value strings into dictionary
@@ -105,16 +105,12 @@ class Browser_Storage {
    // * @this Browser_Storage
    */
   static getObjectifiedLocalStorage(coerce_values = false) {
-    return Object.keys(localStorage).reduce((accumulator, encoded_key) => {
-
-      let value = decodeURIComponent(localStorage.getItem(encoded_key));
     // @ts-ignore
     return Object.entries(localStorage).reduce((accumulator, [encoded_key, encoded_value]) => {
       if (coerce_values === true) {
-        value = Browser_Storage.coerce(value);
+        encoded_value = Browser_Storage.coerce(encoded_value);
       }
-      accumulator[decodeURIComponent(encoded_key)] = value;
-
+      accumulator[decodeURIComponent(encoded_key)] = encoded_value;
       return accumulator;
     }, {});
   }
@@ -333,16 +329,16 @@ class Browser_Storage {
         const raw_value = localStorage.getItem(encoded_key);
         // Note, `JSON.pars()` has a _finicky appetite_
         if (raw_value === null || raw_value === undefined || raw_value === 'undefined') {
-          yield {key: decoded_key, value: undefined};
+          yield { key: decoded_key, value: undefined };
         } else {
-          yield {key: decoded_key, value: JSON.parse(decodeURIComponent(raw_value))};
+          yield { key: decoded_key, value: JSON.parse(decodeURIComponent(raw_value)) };
         }
       }
     } else if (this.supports_cookies) {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
         const decoded_key = decodeURIComponent(cookies[i].split('=')[0].trim());
-        yield {key: decoded_key, value: Browser_Storage._getCookieItem(decoded_key)};
+        yield { key: decoded_key, value: Browser_Storage._getCookieItem(decoded_key) };
       }
     }
     else {
