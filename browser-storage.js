@@ -61,6 +61,7 @@ class Browser_Storage {
     try {
       return JSON.parse(value);
     } catch (e) {
+      /* istanbul ignore next */
       if (!(e instanceof SyntaxError)) {
         throw e;
       }
@@ -107,6 +108,8 @@ class Browser_Storage {
     return Object.keys(localStorage).reduce((accumulator, encoded_key) => {
 
       let value = decodeURIComponent(localStorage.getItem(encoded_key));
+    // @ts-ignore
+    return Object.entries(localStorage).reduce((accumulator, [encoded_key, encoded_value]) => {
       if (coerce_values === true) {
         value = Browser_Storage.coerce(value);
       }
@@ -126,7 +129,9 @@ class Browser_Storage {
     try {
       localStorage.setItem('test_key', 'true');
     } catch (e) {
+      /* istanbul ignore next */
       if (!(e instanceof ReferenceError)) throw e;
+      /* istanbul ignore next */
       return false;
     } finally {
       localStorage.removeItem('test_key');
@@ -145,6 +150,7 @@ class Browser_Storage {
     if (Browser_Storage._setCookieItem('testcookie', '', 7)) {
       return Browser_Storage._setCookieItem('testcookie', '', -7);
     }
+    /* istanbul ignore next */
     return false;
   }
 
@@ -174,7 +180,9 @@ class Browser_Storage {
     try {
       document.cookie = `${encoded_key}=${encoded_value}${expires}; path=/`;
     } catch (e) {
+      /* istanbul ignore next */
       if (!(e instanceof ReferenceError)) throw e;
+      /* istanbul ignore next */
       return false;
     }
     return true;
