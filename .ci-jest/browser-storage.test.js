@@ -225,7 +225,10 @@ class Browser_Storage_Test {
 
       expect(this.storage.constructor.coerce('true')).toBe(true);
       expect(this.storage.constructor.coerce('false')).toBe(false);
+      expect(this.storage.constructor.coerce('undefined')).toBe(undefined);
       expect(this.storage.constructor.coerce('NaN')).toBe(NaN);
+      expect(this.storage.constructor.coerce('null')).toBe(null);
+      expect(this.storage.constructor.coerce('string')).toBe('string');
       expect(this.storage.constructor.coerce(test_json)).toStrictEqual(test_object);
     });
   }
