@@ -360,7 +360,7 @@ class Browser_Storage {
  * Exports are for Jest who uses Node for Travis-CI tests on gh-pages branch
  * https://javascript-utilities.github.io/browser-storage/
  */
-if (typeof(module) !== 'undefined') module.exports = Browser_Storage;
+if (typeof module !== 'undefined') module.exports = Browser_Storage;
 
 
 /**
