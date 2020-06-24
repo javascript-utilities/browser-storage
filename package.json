@@ -30,12 +30,6 @@
         "functions": 100,
         "lines": 100
       },
-      ".ci-jest/*": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
-      },
       "assets/javascript/modules/browser-storage/**.js": {
         "statements": 95.69,
         "branches": 83.1,
