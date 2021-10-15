@@ -31,9 +31,9 @@
         "lines": 100
       },
       "assets/javascript/modules/browser-storage/**.js": {
-        "statements": 95.69,
-        "branches": 83.1,
-        "functions": 95.24,
+        "statements": 95.68,
+        "branches": 83.09,
+        "functions": 95.23,
         "lines": 96.36
       }
     },
