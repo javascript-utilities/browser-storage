@@ -67,7 +67,7 @@
   "homepage": "https://github.com/javascript-utilities/browser-storage",
   "devDependencies": {
     "jest": "^27.2.5",
-    "jsdoc-to-markdown": "^7.0.1"
+    "jsdoc-to-markdown": "^7.1.0"
   },
   "dependencies": {}
 }
