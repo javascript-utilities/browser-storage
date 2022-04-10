@@ -370,6 +370,6 @@ if (typeof module !== 'undefined') module.exports = Browser_Storage;
 /**
  * @typedef stored_data
  * @type {Object}
- * @property {string|number|float} key   - `data.key` from `localStorage` or cookies
- * @property {*}                   value - `data.value` from `localStorage` or cookies
+ * @property {string|number} key   - `data.key` from `localStorage` or cookies
+ * @property {*}             value - `data.value` from `localStorage` or cookies
  */
