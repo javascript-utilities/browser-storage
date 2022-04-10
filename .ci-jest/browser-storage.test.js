@@ -1,3 +1,16 @@
+"use strict";
+
+
+/**
+ * Mock cookies
+ * @see {link} - https://stackoverflow.com/questions/50761393/how-to-mock-cookie-getlanguage-in-jest
+ */
+Object.defineProperty(window.document, 'cookie', {
+  writable: true,
+  value: '',
+});
+
+
 /**
  * @author S0AndS0
  * @copyright AGPL-3.0
